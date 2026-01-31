@@ -1,0 +1,9 @@
+:root {
+	/* здесь прописать переменные для цветов */
+	--color-background: #fcfcfc;
+	--blue-color: #007FFF;
+	--light-green-color: #34C759;
+	--light-grey-color: #B3C0D2;
+	--dark-blue-color: #002C6A;
+	--dark-color: #29292D;
+}

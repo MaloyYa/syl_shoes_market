@@ -1,0 +1,22 @@
+.user_actions {
+	display: flex;
+	gap: 20px;
+}
+
+@media (max-width:1220px) {
+	.user_actions {
+		gap: 25px;
+	}
+}
+
+@media (max-width:760px) {
+	.user_actions {
+		gap: 12px;
+	}
+}
+
+@media (max-width:550px) {
+	.user_actions {
+		gap: 5px;
+	}
+}

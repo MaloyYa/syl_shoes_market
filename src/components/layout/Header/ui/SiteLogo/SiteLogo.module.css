@@ -1,0 +1,23 @@
+@media (max-width:1220px) {
+	.site-logo {
+		height: 65px;
+	}
+}
+
+@media (max-width:910px) {
+	.site-logo {
+		height: 50px;
+	}
+}
+
+@media (max-width:620px) {
+	.site-logo {
+		height: 40px;
+	}
+}
+
+@media (max-width:420px) {
+	.site_logo {
+		height: 25px;
+	}
+}

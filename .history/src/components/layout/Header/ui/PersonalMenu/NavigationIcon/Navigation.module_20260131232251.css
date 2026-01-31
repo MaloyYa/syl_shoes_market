@@ -1,0 +1,10 @@
+.user_actions {
+	display: flex;
+	gap: 20px;
+}
+
+@media (max-width:1220px) {
+	.user_actions {
+		gap: 25px;
+	}
+}
