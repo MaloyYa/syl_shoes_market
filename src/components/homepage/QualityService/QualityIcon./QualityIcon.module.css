@@ -1,0 +1,19 @@
+.quality_body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	max-width: 250px;
+}
+
+.quality_image {
+	width: 100px;
+	height: 100px;
+}
+
+.quality_text {
+	text-align: center;
+	font-size: 24px;
+	font-weight: 600;
+	color: var(--dark-blue-color);
+}

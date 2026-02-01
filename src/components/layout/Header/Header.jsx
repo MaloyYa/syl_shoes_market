@@ -4,14 +4,13 @@ import SearchField from './ui/SearchField/SearchField';
 import PersonalMenu from './ui/PersonalMenu/PersonalMenu';
 import SiteLogo from './ui/SiteLogo/SiteLogo';
 
-const Header = () => {
+export const Header = () => {
     return (
         <header className={styles.header}>
-            <SiteLogo />
+            <SiteLogo logo="/src/assets/icons/syl_logo_min.svg" />
             <NavigationMenu />
             <SearchField />
             <PersonalMenu />
         </header>
     );
 };
-export default Header;

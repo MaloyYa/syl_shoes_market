@@ -3,7 +3,7 @@ const SiteLogo = () => {
     return (
         <a href="/">
             <img
-                src="/src/assets/icons/syl_logo.svg"
+                src="/src/assets/icons/syl.svg"
                 alt=""
                 className={styles.site_logo}
             />

@@ -1,8 +1,12 @@
+html {
+	scrollbar-color: var(--blue-color) #fcfcfc;
+}
+
 .wrapper {
 	max-width: 1440px;
 	margin: 0 auto;
 	min-height: 100vh;
-	padding: 0 30px;
 	overflow: hidden;
+	background-color: #FCFCFC;
 
 }

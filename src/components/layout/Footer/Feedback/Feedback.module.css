@@ -1,0 +1,20 @@
+.feedback {
+	display: flex;
+	flex-direction: column;
+	gap: 50px;
+}
+
+.email_block {
+	display: flex;
+	gap: 5px;
+}
+
+.email_icon {
+	height: 20px;
+	width: 20px;
+}
+
+.email_address {
+	font-size: 18px;
+	font-weight: 400;
+}

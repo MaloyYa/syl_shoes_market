@@ -1,0 +1,20 @@
+.brand_section {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 100px;
+}
+
+.section_title {
+	padding-left: 40px;
+	font-weight: bold;
+	font-size: 48px;
+	color: var(--dark-blue-color);
+	margin-bottom: 50px;
+}
+
+.swiper {
+	display: flex;
+	gap: 50px;
+	justify-content: center;
+}

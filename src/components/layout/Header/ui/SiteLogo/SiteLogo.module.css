@@ -1,3 +1,7 @@
+.site-logo {
+	height: 85px;
+}
+
 @media (max-width:1220px) {
 	.site-logo {
 		height: 65px;
