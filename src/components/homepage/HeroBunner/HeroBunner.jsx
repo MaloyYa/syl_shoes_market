@@ -1,8 +1,11 @@
+import styles from './HeroBunner.module.css';
+import HeroBody from './HeroBody/HeroBody';
+import HeroBottom from './HeroBottom/HeroBottom';
 const HeroBunner = () => {
     return (
-        <section id="hero-bunner">
-            <div id="hero-content"></div>
-            <div id="hero-links"></div>
+        <section className={styles.hero_bunner}>
+            <HeroBody />
+            <HeroBottom />
         </section>
     );
 };

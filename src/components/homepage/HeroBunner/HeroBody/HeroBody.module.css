@@ -1,0 +1,26 @@
+.hero_body {
+	display: flex;
+	margin-bottom: 50px;
+	justify-content: center;
+	gap: 160px;
+	max-height: 430px;
+	margin-bottom: 75px;
+}
+
+.img_background {
+	position: relative;
+	overflow: visible;
+}
+
+.img_background::before {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	top: 40px;
+	left: -25px;
+	width: 857px;
+	height: 333px;
+	border-radius: 160px;
+	background-color: var(--blue-color);
+	transform: rotate(-22.5deg);
+}

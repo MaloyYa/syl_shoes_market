@@ -1,5 +1,6 @@
 .navigation_item {
 	position: relative;
+	cursor: pointer;
 }
 
 .navigation_item::after {

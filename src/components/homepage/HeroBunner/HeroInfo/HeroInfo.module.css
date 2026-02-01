@@ -1,0 +1,38 @@
+.wrapper_info {
+	max-width: 530px;
+	display: flex;
+	flex-direction: column;
+	gap: 37px;
+	align-items: start;
+}
+
+.hero_title {
+	width: 100%;
+	font-weight: 900;
+	font-size: 72px;
+	color: var(--blue-color);
+	text-transform: uppercase;
+}
+
+.hero_description {
+	max-width: 445px;
+	font-weight: normal;
+	font-size: 36px;
+	color: var(--super-light-grey);
+}
+
+.green_icon_link {
+	font-weight: bold;
+	font-size: 24px;
+	padding: 28px 53px;
+	background-color: var(--light-green-color);
+	color: var(--white);
+	border-radius: 50px;
+	transition: 0.3s ease-in-out;
+
+	&:hover {
+		background-color: transparent;
+		color: var(--light-green-color);
+		box-shadow: 5px 15px 30px rgba(52, 199, 89, 0.4);
+	}
+}
