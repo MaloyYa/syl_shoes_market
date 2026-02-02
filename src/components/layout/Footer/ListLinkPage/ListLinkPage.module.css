@@ -7,3 +7,9 @@
 	align-items: center;
 
 }
+
+@media(max-width:375px) {
+	.list_link_page {
+		font-size: 12px;
+	}
+}

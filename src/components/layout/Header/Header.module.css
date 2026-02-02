@@ -6,3 +6,9 @@
 	padding-top: 15px;
 	margin-bottom: 80px;
 }
+
+@media(max-width:435px) {
+	.header {
+		margin-bottom: 40px;
+	}
+}

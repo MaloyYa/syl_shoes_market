@@ -1,5 +1,30 @@
 .hero_bottom {
 	display: flex;
-	padding-left: 315px;
+	justify-content: center;
+	padding: 0 15px;
 	gap: 140px;
+}
+
+@media(max-width:900px) {
+	.hero_bottom {
+		gap: 100px;
+	}
+}
+
+@media(max-width:500px) {
+	.hero_bottom {
+		gap: 60px;
+	}
+}
+
+@media(max-width:425px) {
+	.hero_bottom {
+		gap: 40px;
+	}
+}
+
+@media(max-width:400px) {
+	.hero_bottom {
+		gap: 60px;
+	}
 }

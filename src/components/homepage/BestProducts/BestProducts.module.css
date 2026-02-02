@@ -18,3 +18,9 @@
 	margin-bottom: 100px;
 	color: var(--dark-blue-color);
 }
+
+@media(max-width:425px) {
+	.best_products {
+		margin-bottom: 30px;
+	}
+}

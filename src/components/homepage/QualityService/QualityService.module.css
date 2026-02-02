@@ -4,3 +4,11 @@
 	gap: 30px;
 	margin-bottom: 80px;
 }
+
+
+@media(max-width:610px) {
+	.quality_service {
+		gap: 50px;
+		margin-bottom: 30px;
+	}
+}

@@ -7,7 +7,7 @@ import SiteLogo from './ui/SiteLogo/SiteLogo';
 export const Header = () => {
     return (
         <header className={styles.header}>
-            <SiteLogo logo="/src/assets/icons/syl_logo_min.svg" />
+            <SiteLogo logo="/src/assets/icons/syl_logo.svg" />
             <NavigationMenu />
             <SearchField />
             <PersonalMenu />

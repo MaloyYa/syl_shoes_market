@@ -1,4 +1,11 @@
 .social_links {
 	display: flex;
-	gap: 30px;
+	max-width: 150px;
+	justify-content: space-between;
+}
+
+@media(max-width:600px) {
+	.social_links {
+		max-width: 100px;
+	}
 }

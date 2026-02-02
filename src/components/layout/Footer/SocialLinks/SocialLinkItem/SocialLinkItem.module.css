@@ -7,3 +7,10 @@
 		transform: scale(1.1);
 	}
 }
+
+@media(max-width:600px) {
+	.social_link>img {
+		max-width: 25px;
+		max-height: 25px;
+	}
+}

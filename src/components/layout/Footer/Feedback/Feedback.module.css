@@ -18,3 +18,19 @@
 	font-size: 18px;
 	font-weight: 400;
 }
+
+@media(max-width:600px) {
+	.feedback {
+		gap: 30px;
+	}
+
+	.email_address {
+		font-size: 12px;
+	}
+}
+
+@media(max-width:375px) {
+	.email_address {
+		font-size: 10px;
+	}
+}

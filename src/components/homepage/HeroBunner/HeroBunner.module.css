@@ -1,7 +1,25 @@
 .hero_bunner {
 	display: inline-flex;
+	flex-wrap: nowrap;
 	flex-direction: column;
 	width: 100%;
 	margin-bottom: 180px;
-	padding-top: 120px;
+}
+
+@media(max-width:1250px) {
+	.hero_bunner {
+		padding-left: 30px;
+	}
+}
+
+@media(max-width:768px) {
+	.hero_bunner {
+		margin-bottom: 120px;
+	}
+}
+
+@media(max-width:768px) {
+	.hero_bunner {
+		margin-bottom: 70px;
+	}
 }
