@@ -15,13 +15,13 @@
 
 .swiper-wrapper {
 	max-width: 92%;
-	gap: 30px;
 }
 
 .best_products_content {
 	display: flex;
-	justify-content: space-between;
+	align-items: center;
 	gap: 10px;
+	overflow: hidden;
 }
 
 .nav_button {

@@ -1,11 +1,15 @@
+import { SvgFavoriteIcon } from '../FavoriteIcon';
 import styles from './ProductCard.module.css';
-const ProductCard = (props) => {
-    const { title, article, image, price } = props;
-
+const ProductCard = ({
+    title,
+    article,
+    image,
+    price,
+    isFavorite,
+    onToggle,
+}) => {
     return (
-        <div
-            className={styles.product_card}
-            div>
+        <div className={styles.product_card}>
             <img
                 src={image}
                 alt=""
@@ -23,9 +27,19 @@ const ProductCard = (props) => {
                         {price} &#8381;
                     </h3>
                     <button
-                        className={
-                            styles.add_favorite_btn
-                        }></button>
+                        onClick={onToggle}
+                        className={styles.add_favorite_btn}
+                        style={{
+                            backgroundColor: 'transparent',
+                        }}>
+                        <SvgFavoriteIcon
+                            fill={
+                                isFavorite
+                                    ? '#47CB74'
+                                    : '#B3C0D2'
+                            }
+                        />
+                    </button>
                 </div>
             </div>
         </div>

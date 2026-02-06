@@ -16,14 +16,13 @@
 
 .swiper-wrapper {
 	max-width: 92%;
-	gap: 30px;
 }
 
 
 .brands_content {
 	display: flex;
 	justify-content: space-between;
-	gap: 10px;
+	overflow: hidden;
 }
 
 .nav_button {

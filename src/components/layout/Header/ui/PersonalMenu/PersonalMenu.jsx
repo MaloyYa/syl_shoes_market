@@ -4,14 +4,14 @@ const PersonalMenu = () => {
     return (
         <ul className={styles.user_actions}>
             <PersonalNavigationIcon
-                icon="/src/assets/icons/shopping-cart-icon.svg"
+                icon="/src/assets/icons/svg/ShoppingCartIcon.svg"
                 counterProduct={1}
             />
             <PersonalNavigationIcon
-                icon="/src/assets/icons/favorite-icon.svg"
+                icon="/src/assets/icons/svg/FavoriteIcon.svg"
                 counterProduct={3}
             />
-            <PersonalNavigationIcon icon="/src/assets/icons/profile-icon.svg" />
+            <PersonalNavigationIcon icon="/src/assets/icons/svg/ProfileIcon.svg" />
         </ul>
     );
 };

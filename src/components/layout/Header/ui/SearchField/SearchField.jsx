@@ -1,3 +1,4 @@
+import { SvgSearchLoop } from '../../../../ui/SearchLoop';
 import styles from './SearchField.module.css';
 const SearchField = () => {
     return (
@@ -12,9 +13,8 @@ const SearchField = () => {
             <button
                 type="submit"
                 className={styles.search_button}>
-                <img
-                    src="/src/assets/icons/search-loop.svg"
-                    alt=""
+                <SvgSearchLoop
+                    className={styles.loop_icon}
                 />
             </button>
         </form>

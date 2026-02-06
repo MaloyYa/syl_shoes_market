@@ -1,4 +1,4 @@
-import ProductCard from '../../ui/ProductCard/ProductCard';
+import ProductCard from '../../../../components/ui/ProductCard/ProductCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
     Autoplay,
@@ -45,7 +45,7 @@ export const BestProducts = (props) => {
                     {bestProducts.map((product, index) => (
                         <SwiperSlide
                             style={{ width: '260px' }}
-                            key={product.article || index}>
+                            key={index}>
                             <ProductCard {...product} />
                         </SwiperSlide>
                     ))}

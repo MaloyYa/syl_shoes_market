@@ -6,8 +6,8 @@ import {
 } from 'swiper/modules';
 import { useRef } from 'react';
 import styles from './Brands.module.css';
-import { BrandLink } from '../../ui/BrandLink/BrandLink';
-const Brands = (props) => {
+import { BrandLink } from './BrandLink/BrandLink';
+export const Brands = (props) => {
     const { brands } = props;
     const swiperRef = useRef();
     const goToPrev = () => swiperRef.current?.slidePrev();
@@ -72,4 +72,3 @@ const Brands = (props) => {
         </section>
     );
 };
-export default Brands;
