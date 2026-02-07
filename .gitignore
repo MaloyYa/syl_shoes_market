@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 .history
-mock
+
 
 # Editor directories and files
 .vscode/*

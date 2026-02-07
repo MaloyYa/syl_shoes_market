@@ -13,3 +13,10 @@
 		margin-bottom: 30px;
 	}
 }
+
+@media(max-width:425px) {
+	.quality_service {
+		gap: 0;
+		margin-bottom: 30px;
+	}
+}
