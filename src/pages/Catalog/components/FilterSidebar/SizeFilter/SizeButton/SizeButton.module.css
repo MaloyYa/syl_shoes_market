@@ -1,0 +1,19 @@
+.gridItem {
+	list-style: none;
+}
+
+.btnSize {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 14;
+	background-color: var(--color-background);
+	color: var(--dark-blue-color);
+	border-radius: 3px;
+	transition: 0.3s;
+	padding: 2px;
+}
+
+.btnSizeActive {
+	color: var(--color-background);
+	background-color: var(--light-green-color);
+}

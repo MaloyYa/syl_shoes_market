@@ -1,0 +1,14 @@
+.gridCatalog {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 25px;
+
+}
+
+@media(max-width:768px) {
+	.gridCatalog {
+		grid-template-columns: repeat(3, 1.5fr);
+		justify-content: center;
+		gap: 15px;
+	}
+}

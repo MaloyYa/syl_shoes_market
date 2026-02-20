@@ -17,6 +17,10 @@
 	display: none;
 }
 
+.activeLink {
+	color: var(--light-green-color);
+}
+
 @media (max-width:1220px) {
 	.navList {
 		font-size: 18px;

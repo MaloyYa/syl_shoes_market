@@ -40,13 +40,12 @@ export const Brands = (props) => {
                         1200: { spaceBetween: 24 },
                     }}>
                     {brands.map(
-                        ({
-                            logoBrand,
-                            titleBrand,
-                            href,
-                        }) => (
+                        (
+                            { logoBrand, titleBrand, href },
+                            id,
+                        ) => (
                             <SwiperSlide
-                                key={logoBrand}
+                                key={id}
                                 style={{ width: '190px' }}>
                                 {logoBrand && (
                                     <BrandLink

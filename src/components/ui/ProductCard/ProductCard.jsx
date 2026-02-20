@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { SvgFavoriteIcon } from '../FavoriteIcon';
 import styles from './ProductCard.module.css';
 const ProductCard = ({
@@ -19,13 +20,13 @@ const ProductCard = ({
                 <h4 className={styles.product_title}>
                     {title}
                 </h4>
-                <h5 className={styles.product_article}>
+                <div className={styles.product_article}>
                     Артикул {article}
-                </h5>
+                </div>
                 <div className={styles.product_bottom}>
-                    <h3 className={styles.product_price}>
+                    <div className={styles.product_price}>
                         {price} &#8381;
-                    </h3>
+                    </div>
                     <button
                         onClick={onToggle}
                         className={styles.add_favorite_btn}
@@ -45,4 +46,4 @@ const ProductCard = ({
         </div>
     );
 };
-export default ProductCard;
+export default memo(ProductCard);
