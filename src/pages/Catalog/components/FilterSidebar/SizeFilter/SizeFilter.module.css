@@ -23,3 +23,30 @@
 .li {
 	list-style: none;
 }
+
+@media(max-width:768px) {
+
+
+	.title {
+		font-size: 22px;
+	}
+}
+
+@media(max-width:500px) {
+
+
+	.title {
+		font-size: 20px;
+	}
+
+
+}
+
+@media(max-width:425px) {
+
+
+	.title {
+		font-size: 18px;
+	}
+
+}

@@ -1,4 +1,5 @@
 import styles from './CheckBoxFilter.module.css';
+import { CheckboxItem } from './CheckboxItem/CheckboxItem';
 
 export const CheckBoxFilter = ({
     title,
@@ -14,30 +15,13 @@ export const CheckBoxFilter = ({
             <ul className={styles.checkboxList}>
                 {options.map((option) => (
                     <li key={option}>
-                        <label
-                            className={
-                                styles.checkboxContainer
-                            }>
-                            <input
-                                type="checkbox"
-                                value={option}
-                                checked={selectedValueParameters.includes(
-                                    option,
-                                )}
-                                className={
-                                    styles.inputCheckbox
-                                }
-                                onChange={() => {
-                                    onToggle(option);
-                                }}
-                            />
-                            <span
-                                className={
-                                    styles.checkboxText
-                                }>
-                                {option}
-                            </span>
-                        </label>
+                        <CheckboxItem
+                            value={option}
+                            isChecked={selectedValueParameters.includes(
+                                option,
+                            )}
+                            action={() => onToggle(option)}
+                        />
                     </li>
                 ))}
             </ul>

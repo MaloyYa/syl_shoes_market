@@ -1,0 +1,47 @@
+.checkboxContainer {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	font-size: 14px;
+	font-weight: 400;
+	cursor: pointer;
+}
+
+.inputCheckbox {
+	appearance: none;
+	-webkit-appearance: none;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+	border: 2px solid var(--light-grey-color);
+	border-radius: 5px;
+	transition: all 0.2s;
+	flex-shrink: 0;
+}
+
+.inputCheckbox:checked {
+	background-color: var(--light-green-color);
+	border-color: var(--light-green-color);
+	background-image: url('/src/assets/icons/svg/Check.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 16px;
+}
+
+
+
+@media(max-width:425px) {
+
+
+	.checkboxContainer {
+		font-size: 12px;
+		gap: 8px;
+	}
+
+	.inputCheckbox {
+		width: 16px;
+		height: 16px;
+		border-radius: 3px;
+		background-size: 12px;
+	}
+}

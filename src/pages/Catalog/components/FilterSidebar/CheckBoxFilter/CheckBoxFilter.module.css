@@ -40,10 +40,47 @@
 }
 
 .inputCheckbox:checked {
-	background-color: var(--ligth-green-color);
-	border-color: var(--ligth-green-color);
+	background-color: var(--light-green-color);
+	border-color: var(--light-green-color);
 	background-image: url('/src/assets/icons/svg/Check.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 16px;
+}
+
+@media(max-width:768px) {
+	.checkboxList {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		overflow-y: hidden;
+	}
+
+	.titleFilterBox {
+		font-size: 22px;
+	}
+}
+
+@media(max-width:500px) {
+	.checkboxList {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.titleFilterBox {
+		font-size: 20px;
+	}
+
+
+}
+
+@media(max-width:425px) {
+	.checkboxList {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.titleFilterBox {
+		font-size: 18px;
+	}
+
 }

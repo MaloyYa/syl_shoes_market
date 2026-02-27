@@ -8,5 +8,14 @@
 @media(max-width: 768px) {
 	.main {
 		flex-direction: column;
+		gap: 30px;
+	}
+}
+
+@media(max-width: 768px) {
+	.main {
+		flex-direction: column;
+		padding-left: 15px;
+		padding-right: 15px;
 	}
 }

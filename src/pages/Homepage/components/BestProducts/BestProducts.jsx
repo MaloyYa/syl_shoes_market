@@ -50,49 +50,26 @@ export const BestProducts = (props) => {
                 <Swiper
                     style={{ minHeight }}
                     modules={[Navigation, Pagination]}
-                    spaceBetween={24}
                     pagination={{ clickable: true }}
                     onSwiper={(swiper) => {
                         swiperRef.current = swiper;
                     }}
-                    className={styles['swiper-wrapper']}
+                    // Ключевые изменения здесь:
+                    slidesPerView={'auto'}
+                    spaceBetween={20} // Отступ между слайдами
                     breakpoints={{
-                        320: {
-                            spaceBetween: 6,
-                            slidesPerView: 1.5,
-                        },
-                        425: {
-                            spaceBetween: 12,
-                            slidesPerView: 2,
-                        },
-                        500: {
-                            spaceBetween: 14,
-                            slidesPerView: 2.3,
-                        },
-                        610: {
-                            spaceBetween: 12,
-                            slidesPerView: 2.5,
-                        },
-                        670: {
-                            spaceBetween: 16,
-                            slidesPerView: 2.8,
-                        },
-                        740: {
-                            spaceBetween: 16,
-                            slidesPerView: 3.2,
-                        },
-                        900: {
-                            spaceBetween: 16,
-                            slidesPerView: 3.5,
-                        },
-                        1024: {
-                            spaceBetween: 20,
-                            slidesPerView: 4,
-                        },
-                    }}>
+                        320: { spaceBetween: 6 },
+                        425: { spaceBetween: 12 },
+                        1024: { spaceBetween: 20 },
+                    }}
+                    className={styles['swiper-wrapper']}>
                     {bestProducts.map((product, index) => (
-                        <SwiperSlide key={index}>
-                            <ProductCard {...product} />
+                        <SwiperSlide
+                            key={index}
+                            style={{ width: 'auto' }}>
+                            <ProductCard
+                                product={product}
+                            />
                         </SwiperSlide>
                     ))}
                 </Swiper>

@@ -2,7 +2,7 @@ import { BestProducts } from './BestProducts/BestProducts';
 import { Brands } from './Brands/Brands';
 import { HeroBunner } from './HeroBunner/HeroBunner';
 import { QualityService } from './QualityService/QualityService';
-import { bestProducts } from '/src/mock/mockBestProducts';
+import { mockProducts } from '../../../mock/mockProducts';
 import { brands } from '/src/mock/mockBrands';
 
 export const Homepage = () => {
@@ -10,7 +10,7 @@ export const Homepage = () => {
         <>
             <main className="main">
                 <HeroBunner />
-                <BestProducts bestProducts={bestProducts} />
+                <BestProducts bestProducts={mockProducts} />
                 <QualityService />
                 <Brands brands={brands} />
             </main>

@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { NavLink } from 'react-router';
 import styles from './NavigationMenu.module.css';
+import { useFocus } from '../../../../../hooks/useFocus';
 const NavigationMenu = () => {
     const [isOpen, setOpen] = useState(false);
 
@@ -12,31 +13,7 @@ const NavigationMenu = () => {
         { path: '/delivery', label: 'Доставка' },
     ];
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (
-                isOpen &&
-                menuRef.current &&
-                !menuRef.current.contains(event.target)
-            ) {
-                setOpen(false);
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener(
-                'mousedown',
-                handleClickOutside,
-            );
-        }
-
-        return () => {
-            document.removeEventListener(
-                'mousedown',
-                handleClickOutside,
-            );
-        };
-    }, [isOpen]);
+    useFocus(isOpen, menuRef, setOpen);
     return (
         <nav
             className={styles.headerNav}

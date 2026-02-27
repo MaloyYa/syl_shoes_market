@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from './PriceFilter.module.css';
-//TODO переделать все к хуям собачим с нуля
 export const PriceFilter = (props) => {
     const {
         priceRange,
@@ -15,6 +14,7 @@ export const PriceFilter = (props) => {
     const [localMax, setLocalMax] = useState(
         priceRange.maxPrice,
     );
+    const regExpNumber = /^\d*$/;
 
     useEffect(() => {
         setLocalMin(priceRange.minPrice);
@@ -22,24 +22,33 @@ export const PriceFilter = (props) => {
     }, [priceRange.minPrice, priceRange.maxPrice]);
 
     const handleMinPrice = (event) => {
-        const value = event.target.value;
-        let newMinPrice = value === '' ? 0 : Number(value);
-
-        if (newMinPrice < absoluteMin) {
-            newMinPrice = absoluteMin;
+        let newValue;
+        if (regExpNumber.test(event.target.value)) {
+            newValue = Number(event.target.value);
+            if (newValue >= localMax) {
+                newValue = localMax - 1;
+                setLocalMin(newValue);
+                onPriceChange(newValue, localMax);
+            } else {
+                setLocalMin(newValue);
+                onPriceChange(newValue, localMax);
+            }
         }
-        if (newMinPrice >= localMax) {
-            newMinPrice = localMax - 1;
-        }
-
-        setLocalMin(newMinPrice);
-        onPriceChange(newMinPrice, localMax);
     };
 
     const handleMaxPrice = (event) => {
-        const newMax = event.target.value;
-        setLocalMax(newMax);
-        onPriceChange(localMin, newMax);
+        let newValue;
+        if (regExpNumber.test(event.target.value)) {
+            newValue = Number(event.target.value);
+            if (newValue > absoluteMax) {
+                newValue = absoluteMax - 1;
+                setLocalMax(newValue);
+                onPriceChange(localMin, newValue);
+            } else {
+                setLocalMax(newValue);
+                onPriceChange(localMin, newValue);
+            }
+        }
     };
 
     return (
@@ -47,15 +56,18 @@ export const PriceFilter = (props) => {
             <h4 className={styles.title}>Цена</h4>
             <div className={styles.priceInputsWrapper}>
                 <input
-                    type="number"
+                    type="text"
+                    minLength={String(absoluteMin).length}
+                    maxLength={String(absoluteMax).length}
                     className={styles.filterField}
                     value={localMin}
                     onChange={handleMinPrice}
-                    step={1}
                 />
                 <span className={styles.separator}>—</span>
                 <input
-                    type="number"
+                    type="text"
+                    minLength={String(absoluteMin).length}
+                    maxLength={String(absoluteMax).length}
                     className={styles.filterField}
                     value={localMax}
                     onChange={handleMaxPrice}

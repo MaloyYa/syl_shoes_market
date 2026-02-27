@@ -2,13 +2,39 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 25px;
+	align-items: start;
+	grid-template-rows: min-content;
 
+}
+
+@media(max-width:1068px) {
+	.gridCatalog {
+		grid-template-columns: repeat(3, auto);
+	}
+}
+
+@media(max-width:900px) {
+	.gridCatalog {
+		grid-template-columns: repeat(3, 170px);
+	}
+}
+
+@media(max-width:840px) {
+	.gridCatalog {
+		grid-template-columns: repeat(3, 140px);
+	}
 }
 
 @media(max-width:768px) {
 	.gridCatalog {
-		grid-template-columns: repeat(3, 1.5fr);
+		grid-template-columns: repeat(3, 1fr);
 		justify-content: center;
 		gap: 15px;
+	}
+}
+
+@media(max-width:425px) {
+	.gridCatalog {
+		grid-template-columns: repeat(2, 1fr);
 	}
 }
