@@ -4,7 +4,7 @@ export const SizeFilter = (props) => {
     const {
         selectedSizes = [],
         onSizeSelect,
-        sizes,
+        availableSizes,
     } = props;
     const handleSizeClick = (size) => {
         onSizeSelect(size);
@@ -13,7 +13,7 @@ export const SizeFilter = (props) => {
         <div className={style.sizeSection}>
             <h4 className={style.title}>Размеры</h4>
             <div className={style.sizeGrid}>
-                {sizes.map((size) => (
+                {availableSizes.map((size) => (
                     <li
                         key={size}
                         className={style.li}>

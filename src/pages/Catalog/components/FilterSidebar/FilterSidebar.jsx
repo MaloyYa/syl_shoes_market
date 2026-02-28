@@ -14,7 +14,7 @@ export const FilterSidebar = (props) => {
         filters,
     } = props;
     const {
-        sizes,
+        availableSizes,
         brands,
         categories,
         colors,
@@ -49,7 +49,7 @@ export const FilterSidebar = (props) => {
                 <SizeFilter
                     selectedSizes={filters.selectedSizes}
                     onSizeSelect={handleSizeSelect}
-                    sizes={sizes}
+                    availableSizes={availableSizes}
                 />
                 <PriceFilter
                     priceRange={filters.price}

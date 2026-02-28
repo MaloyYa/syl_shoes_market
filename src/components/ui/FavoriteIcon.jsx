@@ -1,4 +1,6 @@
-export const SvgFavoriteIcon = (props) => {
+import { memo } from 'react';
+
+export const SvgFavoriteIcon = memo((props) => {
     const { fill = '#276ac7' } = props;
     return (
         <svg
@@ -13,4 +15,4 @@ export const SvgFavoriteIcon = (props) => {
             />
         </svg>
     );
-};
+});

@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
-export const useFilterOptions = (allProducts) => {
+export const useFilterOptions = (products) => {
     return useMemo(() => {
-        if (!allProducts || allProducts.length === 0) {
+        if (!products || products.length === 0) {
             return {
-                sizes: [],
+                availableSizes: [],
                 brands: [],
                 categories: [],
                 colors: [],
@@ -12,17 +12,17 @@ export const useFilterOptions = (allProducts) => {
                 maxPrice: 10000,
             };
         } else {
-            const sizes = [
+            const availableSizes = [
                 ...new Set(
-                    allProducts.map(
-                        (product) => product.size,
+                    products.flatMap(
+                        (product) => product.availableSizes,
                     ),
                 ),
             ].sort((a, b) => Number(a) - Number(b));
 
             const brands = [
                 ...new Set(
-                    allProducts.map(
+                    products.map(
                         (product) => product.brand,
                     ),
                 ),
@@ -30,7 +30,7 @@ export const useFilterOptions = (allProducts) => {
 
             const categories = [
                 ...new Set(
-                    allProducts.map(
+                    products.map(
                         (product) => product.category,
                     ),
                 ),
@@ -38,20 +38,20 @@ export const useFilterOptions = (allProducts) => {
 
             const colors = [
                 ...new Set(
-                    allProducts.map(
+                    products.map(
                         (product) => product.color,
                     ),
                 ),
             ];
 
-            const prices = allProducts.map(
+            const prices = products.map(
                 (product) => product.price,
             );
             const minPrice = Math.min(...prices);
             const maxPrice = Math.max(...prices);
 
             return {
-                sizes,
+                availableSizes,
                 brands,
                 categories,
                 colors,
@@ -59,5 +59,5 @@ export const useFilterOptions = (allProducts) => {
                 maxPrice,
             };
         }
-    }, [allProducts]);
+    }, [products]);
 };
