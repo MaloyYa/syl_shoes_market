@@ -3,13 +3,40 @@ import { SvgFavoriteIcon } from '../FavoriteIcon';
 import styles from './ProductCard.module.css';
 import { useState } from 'react';
 import { ModalProduct } from '../ModalProduct/ModalProduct';
-const ProductCard = ({
-    product = {},
-    onToggleFavorite,
-}) => {
-    const { id, name, article, image, price, isFavorite } =
-        product;
+import { useAuthStore } from '../../../modules/auth/useAuthStore';
+import { useFavoriteStore } from '../../../pages/FavoriteProducts/store/useFavoriteStore';
+const ProductCard = ({ product = {} }) => {
+    const {
+        id,
+        name,
+        article,
+        image,
+        price,
+        isFavorite,
+        rating,
+    } = product;
     const [isOpenModal, setOpenModal] = useState(false);
+
+    const isAuth = useAuthStore((state) => state.isAuth);
+
+    const toggleFavorite = useFavoriteStore(
+        (state) => state.toggleFavorite,
+    );
+
+    const isFavoriteLocal = useFavoriteStore((state) =>
+        state.isFavorite(id),
+    );
+
+    const setVisibilityAuthForm = useAuthStore(
+        (state) => state.setVisibilityForm,
+    );
+
+    const onClickFavorite = (e, id, isAuth) => {
+        e.stopPropagation();
+        isAuth
+            ? toggleFavorite(product)
+            : setVisibilityAuthForm(true);
+    };
 
     return (
         <>
@@ -28,6 +55,12 @@ const ProductCard = ({
                     <div className={styles.product_article}>
                         Артикул {article}
                     </div>
+                    <div className={styles.product_article}>
+                        <span className={styles.star}>
+                            &#9733;
+                        </span>
+                        {rating}
+                    </div>
                     <div className={styles.product_bottom}>
                         <div
                             className={
@@ -37,8 +70,11 @@ const ProductCard = ({
                         </div>
                         <button
                             onClick={(e) => {
-                                e.stopPropagation();
-                                onToggleFavorite(id);
+                                onClickFavorite(
+                                    e,
+                                    id,
+                                    isAuth,
+                                );
                             }}
                             className={
                                 styles.add_favorite_btn
@@ -49,7 +85,7 @@ const ProductCard = ({
                             }}>
                             <SvgFavoriteIcon
                                 fill={
-                                    isFavorite
+                                    isFavoriteLocal
                                         ? '#47CB74'
                                         : '#B3C0D2'
                                 }

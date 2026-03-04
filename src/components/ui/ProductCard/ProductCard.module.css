@@ -6,6 +6,7 @@
 	border-radius: 20px;
 	transition: 0.3s ease-in-out;
 	max-width: 260px;
+	min-width: 260px;
 	cursor: pointer;
 	transition: 0.3s;
 

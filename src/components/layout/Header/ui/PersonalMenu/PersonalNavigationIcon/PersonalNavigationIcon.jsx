@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import styles from './PersonalNavigationIcon.module.css';
 const PersonalNavigationIcon = ({
     icon,
@@ -5,8 +6,8 @@ const PersonalNavigationIcon = ({
     counterProduct,
 }) => {
     return (
-        <a
-            href={href || '/'}
+        <Link
+            to={href || '/'}
             className={styles.nav_icon}
             aria-label="Описание действия">
             <img
@@ -20,7 +21,7 @@ const PersonalNavigationIcon = ({
                         : counterProduct}
                 </span>
             )}
-        </a>
+        </Link>
     );
 };
 export default PersonalNavigationIcon;

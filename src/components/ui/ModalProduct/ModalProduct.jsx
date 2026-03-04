@@ -1,8 +1,10 @@
 import { createPortal } from 'react-dom';
 import styles from './ModalProduct.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFocus } from '../../../hooks/useFocus';
 import { RadioItem } from './RadioItem/RadioItem';
+import { useAuthStore } from '../../../modules/auth/useAuthStore';
+import { useBlockScrollWindow } from '../../../hooks/useBlockScrollWindow';
 export const ModalProduct = (props) => {
     const { product, open, onClose } = props;
 
@@ -15,31 +17,41 @@ export const ModalProduct = (props) => {
         article,
         availableSizes = [],
     } = product;
+    const isAuth = useAuthStore((state) => state.isAuth);
+    const setVisibilityAuthForm = useAuthStore(
+        (state) => state.setVisibilityForm,
+    );
+
     const portal = document.getElementById('portal');
+
     const modalRef = useRef(null);
+
     useFocus(open, modalRef, onClose);
+
     const [selectSize, setSelectSize] = useState(null);
-    useEffect(() => {
-        if (!open) return;
+    const [productData, setProductData] = useState({
+        image: image,
+        name: name,
+        rating: rating,
+        price: price,
+        color: color,
+        article: article,
+        selectSize: selectSize,
+    });
 
-        const originalOverflow =
-            document.body.style.overflow;
+    useBlockScrollWindow(open);
 
-        document.body.style.overflow = 'hidden';
-
-        return () => {
-            document.body.style.overflow = originalOverflow;
-        };
-    }, [open]);
     if (!portal) {
         return null;
     }
+
     if (!open) {
         return null;
     }
-    const onSubmit = () => {
-        console.log(product, selectSize);
+    const onSubmit = (data) => {
+        alert(JSON.stringify(data));
     };
+
     return createPortal(
         <div className={styles.overlay}>
             <div
@@ -60,13 +72,18 @@ export const ModalProduct = (props) => {
                         className={styles.modalMain}
                         onSubmit={(event) => {
                             event.preventDefault();
-                            onSubmit();
+                            if (isAuth) {
+                                onSubmit(productData);
+                            } else {
+                                setVisibilityAuthForm(true);
+                                onClose();
+                            }
                         }}>
                         <p className={styles.rating}>
-                            {rating}{' '}
                             <span className={styles.star}>
                                 &#9733;
                             </span>
+                            {rating}
                         </p>
 
                         <p className={styles.article}>
@@ -86,6 +103,13 @@ export const ModalProduct = (props) => {
                                     size={size}
                                     onChange={() => {
                                         setSelectSize(size);
+                                        setProductData(
+                                            (prev) => ({
+                                                ...prev,
+                                                selectSize:
+                                                    size,
+                                            }),
+                                        );
                                     }}
                                 />
                             ))}

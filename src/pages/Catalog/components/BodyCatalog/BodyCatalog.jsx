@@ -6,7 +6,11 @@ export const BodyCatalog = () => {
     return (
         <div className={styles.gridCatalog}>
             {mockProducts.map((product) => (
-                <ProductCard product={product} />
+                <li
+                    key={product.id}
+                    style={{ listStyle: 'none' }}>
+                    <ProductCard product={product} />
+                </li>
             ))}
         </div>
     );

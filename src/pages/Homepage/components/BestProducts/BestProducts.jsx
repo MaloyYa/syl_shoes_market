@@ -63,9 +63,9 @@ export const BestProducts = (props) => {
                         1024: { spaceBetween: 20 },
                     }}
                     className={styles['swiper-wrapper']}>
-                    {bestProducts.map((product, index) => (
+                    {bestProducts.map((product) => (
                         <SwiperSlide
-                            key={index}
+                            key={product.id}
                             style={{ width: 'auto' }}>
                             <ProductCard
                                 product={product}

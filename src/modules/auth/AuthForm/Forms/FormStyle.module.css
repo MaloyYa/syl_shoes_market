@@ -1,0 +1,103 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	animation: appearance 0.7s ease;
+}
+
+.inputBox {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+
+.titleField {
+	font-size: 18px;
+	font-weight: 600;
+	padding-left: 5px;
+	margin-bottom: 5px;
+	color: var(--dark-color);
+}
+
+.inputField {
+	border-radius: 8px;
+	font-size: 14px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	width: 98%;
+	transition: border-color 0.3s ease;
+
+	&:focus {
+		border-color: var(--blue-color);
+	}
+}
+
+.error {
+	color: red;
+}
+
+.passFieldWrapper {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.passFieldWrapper .inputField {
+	width: 95%;
+}
+
+.toggleVisibleBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 45px;
+	height: 45px;
+	background-color: var(--blue-color);
+	border-radius: 8px;
+}
+
+.btnSubmit {
+	background-color: var(--blue-color);
+	color: var(--white);
+	font-size: 18px;
+	padding: 10px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-bottom: 30px;
+	transition: 0.3s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		transform: translateY(-200px) scale(0);
+
+
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+
+
+	}
+}
+
+@media(max-width: 768px) {
+	.titleField {
+		font-size: 14px;
+	}
+
+	.inputField {
+		font-size: 12px;
+		padding: 6px;
+	}
+}
