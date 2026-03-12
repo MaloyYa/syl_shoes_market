@@ -1,54 +1,56 @@
+import { useMemo, useState } from 'react';
+import { SelectFilter } from '../../components/layout/SelectFilter/SelectFilter';
 import ProductCard from '../../components/ui/ProductCard/ProductCard';
-// import { mockProducts } from '../../mock/mockProducts';
 import styles from './FavoriteProducts.module.css';
 import { useFavoriteStore } from './store/useFavoriteStore';
 export const FavoriteProducts = () => {
     const products = useFavoriteStore((state) =>
         state.getFavorites(),
     );
+    const [sort, setSort] = useState('default');
+
+    const sortedProducts = useMemo(() => {
+        if (!products) return;
+        const copy = [...products];
+        switch (sort) {
+            case 'price-asc':
+                return copy.sort(
+                    (a, b) => a.price - b.price,
+                );
+            case 'price-desc':
+                return copy.sort(
+                    (a, b) => b.price - a.price,
+                );
+            case 'rating':
+                return copy.sort(
+                    (a, b) => b.rating - a.rating,
+                );
+            default:
+                return copy;
+        }
+    }, [products, sort]);
+
     if (!products || products.length === 0) {
         return (
             <main className={styles.main}>
                 <p className={styles.messageNull}>
-                    Вы ничего не добавили в раздел
-                    избранного
+                    Список избранного пуст...
                 </p>
             </main>
         );
     }
-    // const optionSort = [
-    //     'По умолчанию',
-    //     'По рейтингу',
-    //     'По цене',
-    // ];
 
-    // const datalistId = 'sort-options';
     return (
         <main className={styles.main}>
-            {/* <div className={styles.sortContainer}>
-                {' '}
-                <label htmlFor="optionSort">
-                    Сортировка:
-                    <input
-                        type="text"
-                        id="optionSort"
-                        list={datalistId}
-                        placeholder="Выберите сортировку"
-                        autoComplete="off"
-                    />
-                </label>
-                <datalist id={datalistId}>
-                    {optionSort.map((option) => (
-                        <option
-                            key={option}
-                            value={option}
-                        />
-                    ))}
-                </datalist>
-            </div> */}
+            <div className={styles.blockSort}>
+                <SelectFilter
+                    value={sort}
+                    onChange={setSort}
+                />
+            </div>
             <ul className={styles.gridFavorites}>
-                {products &&
-                    products.map((product) => (
+                {sortedProducts &&
+                    sortedProducts.map((product) => (
                         <li
                             key={product.id}
                             style={{ listStyle: 'none' }}>

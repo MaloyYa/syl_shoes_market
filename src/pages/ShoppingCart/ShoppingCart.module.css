@@ -1,0 +1,93 @@
+.main {
+	width: 100%;
+	display: flex;
+	min-height: 60vh;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.listShoppingProducts {
+	width: 100%;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 45px;
+	margin-bottom: 40px;
+}
+
+.shopItem {
+	width: 80%;
+	min-width: 300px;
+}
+
+.totalPriceShoppingCart {
+	display: flex;
+	gap: 20px;
+	align-self: start;
+
+	padding-left: 10%;
+
+	color: var(--black);
+	font-size: 40px;
+	font-weight: 400;
+}
+
+.totalPriceValue {
+	font-weight: bold;
+	color: var(--dark-blue-color);
+}
+
+@media(max-width:1115px) {
+	.listShoppingProducts {
+		gap: 35px;
+	}
+
+	.totalPriceShoppingCart {
+		font-size: 36px;
+	}
+}
+
+@media(max-width:900px) {
+	.totalPriceShoppingCart {
+		font-size: 30px;
+	}
+}
+
+@media(max-width:768px) {
+	.totalPriceShoppingCart {
+		font-size: 26px;
+	}
+
+	.listShoppingProducts {
+		margin-bottom: 30px;
+	}
+}
+
+@media(max-width:590px) {
+	.listShoppingProducts {
+		gap: 25px;
+	}
+
+	.totalPriceShoppingCart {
+		font-size: 22px;
+	}
+
+	.listShoppingProducts {
+		margin-bottom: 25px;
+	}
+}
+
+@media(max-width:425px) {
+	.listShoppingProducts {
+		gap: 15px;
+	}
+
+	.totalPriceShoppingCart {
+		font-size: 18px;
+	}
+
+	.listShoppingProducts {
+		margin-bottom: 20px;
+	}
+}

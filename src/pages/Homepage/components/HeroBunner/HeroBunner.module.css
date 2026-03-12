@@ -4,6 +4,7 @@
 	flex-direction: column;
 	width: 100%;
 	margin-bottom: 180px;
+	animation: appearance 0.5s ease-out;
 }
 
 @media(max-width:1250px) {
@@ -22,4 +23,17 @@
 	.hero_bunner {
 		margin-bottom: 70px;
 	}
+}
+
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		transform: translateZ(-20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateZ(0);
+	}
+
 }

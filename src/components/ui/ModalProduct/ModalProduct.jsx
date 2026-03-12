@@ -5,6 +5,9 @@ import { useFocus } from '../../../hooks/useFocus';
 import { RadioItem } from './RadioItem/RadioItem';
 import { useAuthStore } from '../../../modules/auth/useAuthStore';
 import { useBlockScrollWindow } from '../../../hooks/useBlockScrollWindow';
+import { useAuthFormStore } from '../../../modules/auth/AuthForm/useAuthFormStore';
+import { useShoppingCartStore } from '../../../pages/ShoppingCart/store/useShoppingCartStore';
+
 export const ModalProduct = (props) => {
     const { product, open, onClose } = props;
 
@@ -17,9 +20,15 @@ export const ModalProduct = (props) => {
         article,
         availableSizes = [],
     } = product;
+
     const isAuth = useAuthStore((state) => state.isAuth);
-    const setVisibilityAuthForm = useAuthStore(
-        (state) => state.setVisibilityForm,
+
+    const setVisibilityAuthForm = useAuthFormStore(
+        (state) => state.setVisibilityAuthForm,
+    );
+
+    const addToCart = useShoppingCartStore(
+        (state) => state.addToCart,
     );
 
     const portal = document.getElementById('portal');
@@ -29,15 +38,6 @@ export const ModalProduct = (props) => {
     useFocus(open, modalRef, onClose);
 
     const [selectSize, setSelectSize] = useState(null);
-    const [productData, setProductData] = useState({
-        image: image,
-        name: name,
-        rating: rating,
-        price: price,
-        color: color,
-        article: article,
-        selectSize: selectSize,
-    });
 
     useBlockScrollWindow(open);
 
@@ -48,8 +48,12 @@ export const ModalProduct = (props) => {
     if (!open) {
         return null;
     }
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+    const onSubmit = () => {
+        if (!selectSize) return;
+        addToCart({
+            ...product,
+            size: selectSize,
+        });
     };
 
     return createPortal(
@@ -73,7 +77,7 @@ export const ModalProduct = (props) => {
                         onSubmit={(event) => {
                             event.preventDefault();
                             if (isAuth) {
-                                onSubmit(productData);
+                                onSubmit();
                             } else {
                                 setVisibilityAuthForm(true);
                                 onClose();
@@ -103,13 +107,6 @@ export const ModalProduct = (props) => {
                                     size={size}
                                     onChange={() => {
                                         setSelectSize(size);
-                                        setProductData(
-                                            (prev) => ({
-                                                ...prev,
-                                                selectSize:
-                                                    size,
-                                            }),
-                                        );
                                     }}
                                 />
                             ))}
@@ -119,7 +116,7 @@ export const ModalProduct = (props) => {
                             type="submit"
                             disabled={!selectSize}
                             className={styles.btnAddCart}>
-                            Добавить в корзину
+                            'Добавить в корзину'
                         </button>
                     </form>
                 </div>

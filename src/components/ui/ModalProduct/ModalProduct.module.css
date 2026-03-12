@@ -15,6 +15,20 @@
 	border-radius: 70px;
 	padding: 30px;
 	width: 80%;
+	animation: appearance 0.5s ease-in-out;
+}
+
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		transform: translateZ(-20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateZ(0);
+	}
+
 }
 
 .image {

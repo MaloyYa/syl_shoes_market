@@ -1,14 +1,21 @@
 .main {
-	display: grid;
-	justify-items: center;
+	display: flex;
+	justify-content: center;
 	min-height: 60vh;
+	flex-direction: column;
 }
 
 .messageNull {
+	align-self: center;
 	margin: auto 0;
 	font-weight: bold;
 	font-size: 30px;
 	color: var(--light-grey-color);
+}
+
+.blockSort {
+	width: 100%;
+	padding-left: 10%;
 }
 
 .gridFavorites {
@@ -21,14 +28,16 @@
 	margin-bottom: 100px;
 }
 
-@media(max-width: 1200px) {
+@media(max-width: 850px) {
 	.gridFavorites {
 		grid-template-columns: repeat(3, max-content);
+		margin-bottom: 80px;
 	}
 }
 
 @media(max-width: 600px) {
 	.gridFavorites {
 		grid-template-columns: repeat(2, max-content);
+		margin-bottom: 40px;
 	}
 }

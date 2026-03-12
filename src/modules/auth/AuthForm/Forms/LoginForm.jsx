@@ -52,12 +52,20 @@ export const LoginForm = () => {
                     <input
                         type={typeField}
                         placeholder="Password"
-                        minLength={8}
-                        maxLength={40}
                         className={styles.inputField}
                         {...register('password', {
                             required:
                                 'Заполните поле пароля',
+                            minLength: {
+                                value: 8,
+                                message:
+                                    'Пароль должен быть не менее 8 символов',
+                            },
+                            maxLength: {
+                                value: 40,
+                                message:
+                                    'Пароль должен быть не более 40 символов',
+                            },
                         })}
                     />
 

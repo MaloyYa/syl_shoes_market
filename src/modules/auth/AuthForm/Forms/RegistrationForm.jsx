@@ -65,6 +65,16 @@ export const RegistrationForm = () => {
                             message:
                                 'Фамилия может содержать только буквы',
                         },
+                        minLength: {
+                            value: 4,
+                            message:
+                                'Фамилия должна содержать минимум 4 символа',
+                        },
+                        maxLength: {
+                            value: 30,
+                            message:
+                                'Фамилия должна содержать максимум 30 символов',
+                        },
                     })}
                 />
                 {errors.surname && (

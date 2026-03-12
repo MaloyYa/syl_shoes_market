@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ModalProduct } from '../ModalProduct/ModalProduct';
 import { useAuthStore } from '../../../modules/auth/useAuthStore';
 import { useFavoriteStore } from '../../../pages/FavoriteProducts/store/useFavoriteStore';
+import { useAuthFormStore } from '../../../modules/auth/AuthForm/useAuthFormStore';
 const ProductCard = ({ product = {} }) => {
     const {
         id,
@@ -27,8 +28,8 @@ const ProductCard = ({ product = {} }) => {
         state.isFavorite(id),
     );
 
-    const setVisibilityAuthForm = useAuthStore(
-        (state) => state.setVisibilityForm,
+    const setVisibilityAuthForm = useAuthFormStore(
+        (state) => state.setVisibilityAuthForm,
     );
 
     const onClickFavorite = (e, id, isAuth) => {

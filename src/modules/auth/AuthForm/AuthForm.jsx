@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { useAuthStore } from '../useAuthStore';
+// import { useAuthStore } from '../useAuthStore';
 import styles from './AuthForm.module.css';
 import { useFocus } from '../../../hooks/useFocus';
 import { useRef, useState } from 'react';
@@ -7,20 +7,21 @@ import { LoginForm } from './Forms/LoginForm';
 import { useForm } from 'react-hook-form';
 import { RegistrationForm } from './Forms/RegistrationForm';
 import { useBlockScrollWindow } from '../../../hooks/useBlockScrollWindow';
+import { useAuthFormStore } from './useAuthFormStore';
 
 export const AuthForm = () => {
     const portal = document.getElementById('portal');
 
     const { handleSubmit } = useForm();
 
-    const isOpen = useAuthStore(
+    const isOpen = useAuthFormStore(
         (state) => state.isVisibleForm,
     );
 
     useBlockScrollWindow(isOpen);
 
-    const setVisibleAuthForm = useAuthStore(
-        (state) => state.setVisibilityForm,
+    const setVisibleAuthForm = useAuthFormStore(
+        (state) => state.setVisibilityAuthForm,
     );
     const [currentForm, setCurrentForm] = useState('login');
 

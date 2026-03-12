@@ -1,0 +1,21 @@
+.selectBox {
+	display: flex;
+	gap: 25px;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.span {
+	font-weight: 400;
+	font-size: 18px;
+	color: var(--light-grey-color);
+}
+
+.selectInput {
+	font-size: 14px;
+	font-weight: 400;
+	color: var(--dark-color);
+	padding: 5px;
+	border-radius: 12px;
+	box-shadow: 5px 10px 30px var(--blue-shadow);
+}

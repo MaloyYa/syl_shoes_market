@@ -9,10 +9,24 @@
 	position: relative;
 	overflow: visible;
 	transition: 0.3s;
+	animation: appearance 0.5s ease-out;
 
 	&:hover {
 		transform: translateY(-10px) scale(1.05);
 	}
+}
+
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		transform: translateY(20px) translateZ(-5px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0) translateZ(0);
+	}
+
 }
 
 .hero_link_image {
