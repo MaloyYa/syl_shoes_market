@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import styles from './HeroInfo.module.css';
 const HeroInfo = () => {
     return (
@@ -9,11 +10,11 @@ const HeroInfo = () => {
             <h3 className={styles.hero_description}>
                 Городские кроссовки в ярком стиле 80-х
             </h3>
-            <a
-                href=""
+            <Link
+                to={'/catalog'}
                 className={styles.green_icon_link}>
                 Смотреть все
-            </a>
+            </Link>
         </div>
     );
 };

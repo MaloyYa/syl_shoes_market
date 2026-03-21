@@ -21,7 +21,10 @@ const PersonalMenu = () => {
                 href={'/favorites'}
                 counterProduct={countFavorite}
             />
-            <PersonalNavigationIcon icon="/src/assets/icons/svg/ProfileIcon.svg" />
+            <PersonalNavigationIcon
+                icon="/src/assets/icons/svg/ProfileIcon.svg"
+                href={'/me'}
+            />
         </ul>
     );
 };

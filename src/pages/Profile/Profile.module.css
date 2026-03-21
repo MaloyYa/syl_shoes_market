@@ -1,0 +1,24 @@
+.main {
+	min-height: 50vh;
+
+}
+
+.profileForm {
+	display: grid;
+	justify-content: center;
+	column-gap: 70px;
+	row-gap: 50px;
+
+	grid-template-columns: repeat(2, min-content);
+	grid-template-rows: auto min-content;
+}
+
+.blockCategoryInfo {
+	display: flex;
+	flex-direction: column;
+}
+
+.inputBox {
+	display: flex;
+	flex-direction: column;
+}

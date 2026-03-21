@@ -10,6 +10,12 @@ export const useFocus = (isOpen, element, setOpen) => {
                 setOpen(false);
             }
         };
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                setOpen(false);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
 
         if (isOpen) {
             document.addEventListener(
@@ -22,6 +28,10 @@ export const useFocus = (isOpen, element, setOpen) => {
             document.removeEventListener(
                 'mousedown',
                 handleClickOutside,
+            );
+            document.removeEventListener(
+                'keydown',
+                handleEscape,
             );
         };
     }, [isOpen]);

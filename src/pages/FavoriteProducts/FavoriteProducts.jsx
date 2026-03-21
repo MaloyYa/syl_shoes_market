@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { SelectFilter } from '../../components/layout/SelectFilter/SelectFilter';
+import { SelectFilter } from '../../components/ui/SelectFilter/SelectFilter';
 import ProductCard from '../../components/ui/ProductCard/ProductCard';
 import styles from './FavoriteProducts.module.css';
 import { useFavoriteStore } from './store/useFavoriteStore';

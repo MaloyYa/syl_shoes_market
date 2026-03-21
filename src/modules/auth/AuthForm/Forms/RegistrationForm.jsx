@@ -181,10 +181,13 @@ export const RegistrationForm = () => {
                         type={typeField}
                         {...register('confirmPassword', {
                             required: 'Заполните это поле',
-                            validate: (value) =>
-                                value ===
-                                    watch('password') ||
-                                'Пароли не совпадают',
+                            validate: (value) => {
+                                return (
+                                    value ===
+                                        watch('password') ||
+                                    'Пароли не совпадают'
+                                );
+                            },
                         })}
                     />
 

@@ -1,5 +1,5 @@
-import React from 'react';
 import styles from './HeroLink.module.css';
+import { Link } from 'react-router';
 const HeroLink = (props) => {
     const { href, src, text } = props;
     const words = text.split(' ');
@@ -7,8 +7,8 @@ const HeroLink = (props) => {
     const restText = words.slice(1).join(' ');
 
     return (
-        <a
-            href={href !== undefined ? href : '/'}
+        <Link
+            to={href !== undefined ? href : '/'}
             className={styles.link}>
             {src && (
                 <img
@@ -26,7 +26,7 @@ const HeroLink = (props) => {
                 </p>
             </div>
             <span className={styles.cta}>→</span>
-        </a>
+        </Link>
     );
 };
 export default HeroLink;

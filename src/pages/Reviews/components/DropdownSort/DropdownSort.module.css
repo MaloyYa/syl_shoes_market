@@ -1,0 +1,131 @@
+.dropDownSort {
+	position: relative;
+}
+
+.sortButton {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 15px 20px;
+	border-radius: 16px;
+	box-shadow: 4px 12px 60px rgba(0, 0, 0, 0.25);
+	border: 1px solid transparent;
+	transition: 0.5 ease;
+
+	&:hover {
+		border-color: var(--blue-color);
+	}
+}
+
+.sortButtonText {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	color: var(--blue-color);
+	font-weight: 600;
+	font-size: 24px;
+	cursor: pointer;
+
+}
+
+.sortMenu {
+	width: 100%;
+
+	top: 110%;
+	position: absolute;
+	z-index: 10;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+	padding: 20px 0;
+
+	background-color: var(--white);
+	box-shadow: 4px 12px 60px rgba(0, 0, 0, 0.25);
+	border-radius: 16px;
+
+	cursor: pointer;
+	animation: appearance 0.5s ease;
+}
+
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		transform: translateZ(-1px) rotateX(-60deg);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateZ(10px) rotateX(0deg);
+	}
+}
+
+
+.sortListItem {
+	width: 100%;
+	background-color: transparent;
+	font-size: 20px;
+	color: var(--super-light-grey);
+	font-weight: 600;
+
+}
+
+.activeItem {
+	color: var(--blue-color);
+}
+
+.checkmark {
+	color: var(--blue-color);
+	font-weight: bold;
+	margin-left: 8px;
+}
+
+@media(max-width:1150px) {
+	.sortButton {
+		padding: 10px 12px;
+		border-radius: 12px;
+	}
+
+	.sortButtonText {
+		font-size: 20px;
+	}
+
+	.sortListItem {
+		font-size: 16px;
+	}
+}
+
+@media(max-width:900px) {
+	.sortButton {
+		padding: 10px 12px;
+		border-radius: 12px;
+		gap: 10px;
+	}
+
+	.sortButtonText {
+		font-size: 20px;
+	}
+
+	.sortListItem {
+		font-size: 16px;
+	}
+}
+
+@media(max-width:768px) {
+	.sortButtonText {
+		font-size: 16px;
+	}
+
+	.sortListItem {
+		font-size: 14px;
+	}
+}
+
+@media(max-width:630px) {
+
+	.sortButtonText,
+	.sortListItem {
+		font-size: 12px;
+	}
+}

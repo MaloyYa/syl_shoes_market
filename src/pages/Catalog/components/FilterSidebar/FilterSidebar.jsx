@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './FilterSidebar.module.css';
 import { SizeFilter } from './SizeFilter/SizeFilter';
 import { PriceFilter } from './PriceFilter/PriceFilter';
 import { CheckBoxFilter } from './CheckBoxFilter/CheckBoxFilter';
+import { useFocus } from '../../../../hooks/useFocus';
+import { useBlockScrollWindow } from '../../../../hooks/useBlockScrollWindow';
 
 export const FilterSidebar = (props) => {
     const {
@@ -24,6 +26,11 @@ export const FilterSidebar = (props) => {
 
     const [isOpen, setOpen] = useState(false);
 
+    const filterRef = useRef(null);
+
+    useFocus(isOpen, filterRef, setOpen);
+    useBlockScrollWindow(isOpen);
+
     return (
         <aside className={styles.sidebar}>
             {!isOpen && (
@@ -36,7 +43,8 @@ export const FilterSidebar = (props) => {
             <div
                 className={`${styles.filters} ${
                     isOpen && styles.mobileFilters
-                }`}>
+                }`}
+                ref={filterRef}>
                 {isOpen && (
                     <button
                         className={`${

@@ -78,7 +78,7 @@
 @keyframes appearance {
 	0% {
 		opacity: 0;
-		transform: translateY(-200px) scale(0);
+		transform: translateY(-1px) scale(0);
 
 
 	}

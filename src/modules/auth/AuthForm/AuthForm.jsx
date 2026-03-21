@@ -1,6 +1,6 @@
+import styles from './AuthForm.module.css';
 import { createPortal } from 'react-dom';
 // import { useAuthStore } from '../useAuthStore';
-import styles from './AuthForm.module.css';
 import { useFocus } from '../../../hooks/useFocus';
 import { useRef, useState } from 'react';
 import { LoginForm } from './Forms/LoginForm';

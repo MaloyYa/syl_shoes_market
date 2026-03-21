@@ -1,0 +1,132 @@
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		transform: translateZ(-20px);
+
+	}
+
+
+	100% {
+		opacity: 1;
+		transform: translateZ(0);
+	}
+
+}
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(41, 41, 45, 0.4);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modal {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--white);
+	border-radius: 40px;
+	padding: 35px;
+	width: 50%;
+	min-width: 300px;
+	animation: appearance 0.5s ease-in-out;
+}
+
+.btnClose {
+	position: absolute;
+	color: var(--light-grey-color);
+	background-color: var(--white);
+	box-shadow: 5px 10px 30px var(--blue-shadow);
+	right: 4%;
+	top: 4%;
+	width: 35px;
+	height: 35px;
+	align-self: flex-end;
+	border-radius: 50%;
+}
+
+.formComment {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.inputBox {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+
+.titleField {
+	font-size: 18px;
+	font-weight: 600;
+	padding-left: 5px;
+	margin-bottom: 5px;
+	color: var(--dark-color);
+}
+
+.inputField {
+	border-radius: 8px;
+	font-size: 14px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	width: 98%;
+	resize: none;
+	transition: border-color 0.3s ease;
+
+	&:focus {
+		border-color: var(--blue-color);
+	}
+}
+
+.error {
+	width: 100%;
+	font-size: 14px;
+	color: red;
+}
+
+.btnSubmit {
+	align-self: center;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 15px 30px;
+	color: var(--white);
+	background-color: var(--blue-color);
+	border-radius: 12px;
+}
+
+@media(max-width: 920px) {
+	.btnClose {
+		height: 25px;
+		width: 25px;
+	}
+}
+
+@media(max-width: 768px) {
+	.modal {
+		border-radius: 28px;
+	}
+
+	.titleField {
+		font-size: 14px;
+	}
+
+	.inputField {
+		font-size: 12px;
+		padding: 6px;
+	}
+
+	.error {
+
+		font-size: 12px;
+	}
+
+	.btnSubmit {
+		font-size: 14px;
+		padding: 15px 20px;
+	}
+}

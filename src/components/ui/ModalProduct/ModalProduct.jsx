@@ -116,7 +116,7 @@ export const ModalProduct = (props) => {
                             type="submit"
                             disabled={!selectSize}
                             className={styles.btnAddCart}>
-                            'Добавить в корзину'
+                            Добавить в корзину
                         </button>
                     </form>
                 </div>

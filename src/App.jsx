@@ -7,7 +7,10 @@ import { MainLayout } from './MainLayout';
 import { FavoriteProducts } from './pages/FavoriteProducts/FavoriteProducts';
 import { ShoppingCart } from './pages/ShoppingCart/ShoppingCart';
 import { AuthForm } from './modules/auth/AuthForm/AuthForm';
+import { Profile } from './pages/Profile/Profile';
+import { useAuthStore } from './modules/auth/useAuthStore';
 const App = () => {
+    const isAuth = useAuthStore((state) => state.isAuth);
     return (
         <>
             <Routes>
@@ -30,14 +33,25 @@ const App = () => {
                         path="delivery"
                         element={<Delivery />}
                     />
-                    <Route
-                        path="shopping_cart"
-                        element={<ShoppingCart />}
-                    />
-                    <Route
-                        path="favorites"
-                        element={<FavoriteProducts />}
-                    />
+
+                    {isAuth && (
+                        <>
+                            <Route
+                                path="shopping_cart"
+                                element={<ShoppingCart />}
+                            />
+                            <Route
+                                path="favorites"
+                                element={
+                                    <FavoriteProducts />
+                                }
+                            />
+                            <Route
+                                path="me"
+                                element={<Profile />}
+                            />
+                        </>
+                    )}
                 </Route>
             </Routes>
             <AuthForm />
