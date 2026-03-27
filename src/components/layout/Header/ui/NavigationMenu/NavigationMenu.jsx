@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { NavLink } from 'react-router';
 import styles from './NavigationMenu.module.css';
 import { useFocus } from '../../../../../hooks/useFocus';
+
 const NavigationMenu = () => {
     const [isOpen, setOpen] = useState(false);
 
@@ -10,7 +11,6 @@ const NavigationMenu = () => {
         { path: '', label: 'Главная' },
         { path: '/catalog', label: 'Каталог' },
         { path: '/reviews', label: 'Отзывы' },
-        { path: '/delivery', label: 'Доставка' },
     ];
 
     useFocus(isOpen, menuRef, setOpen);

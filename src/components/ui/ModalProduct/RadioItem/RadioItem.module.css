@@ -7,7 +7,7 @@
 	background-color: transparent;
 	color: var(--dark-blue-color);
 	height: 100%;
-	width: 90%;
+	width: 100%;
 	border-radius: 5px;
 	transition: 0.3s ease;
 }
@@ -30,5 +30,7 @@
 @media(max-width:890px) {
 	.sizeLabel {
 		font-size: 14px;
+		min-width: 55px;
+		min-height: 35px;
 	}
 }

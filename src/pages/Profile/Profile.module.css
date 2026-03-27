@@ -1,24 +1,245 @@
 .main {
 	min-height: 50vh;
+	padding: 20px 5%;
 
 }
 
 .profileForm {
 	display: grid;
+	padding: 0px 40px;
 	justify-content: center;
 	column-gap: 70px;
 	row-gap: 50px;
 
-	grid-template-columns: repeat(2, min-content);
+	grid-template-columns: repeat(2, 46%);
 	grid-template-rows: auto min-content;
 }
+
+.btnExitProfile {
+	justify-self: end;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	border-radius: 12px;
+	padding: 10px;
+	font-size: 20px;
+	font-weight: 600;
+	background: transparent;
+	box-shadow: 0 0 4px var(--dark-color);
+	transition: 0.3s ease;
+
+	&:hover {
+		transform: scale(1.1);
+		color: var(--white);
+		background-color: var(--dark-color);
+
+	}
+
+}
+
+.addressAndContactData {
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	gap: 20px;
+	font-size: 24px;
+	font-weight: bold;
+	color: var(--dark-blue-color);
+	grid-column: 1/3;
+
+}
+
+.wrapperAddAndCont {
+	display: grid;
+	justify-content: center;
+	grid-template-columns: repeat(2, 46%);
+	column-gap: 70px;
+}
+
+.submitButton {
+	grid-row: 4;
+	color: var(--white);
+	background-color: var(--light-green-color);
+	font-size: 24px;
+	font-weight: bold;
+	padding: 25px 50px;
+	border-radius: 50px;
+}
+
+
+/* styles for children item form's */
 
 .blockCategoryInfo {
 	display: flex;
 	flex-direction: column;
+	gap: 10px;
+}
+
+.categoryInfo {
+	font-size: 24px;
+	font-weight: bold;
+	color: var(--dark-blue-color);
+	margin-bottom: 20px;
 }
 
 .inputBox {
 	display: flex;
 	flex-direction: column;
+}
+
+.inputField {
+	font-size: 18px;
+	font-weight: 400;
+	color: var(--dark-color);
+	padding: 10px;
+	border-bottom: 2px solid var(--dark-blue-color);
+}
+
+.wrapperInput {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.wrapperInput>.inputField {
+	width: 100%;
+}
+
+.wrapperInput {
+	position: relative;
+}
+
+.btnSwapTypeField {
+	border: none;
+	padding: 0;
+	min-width: 151px;
+	position: absolute;
+	right: 3%;
+	top: 30%;
+	background-color: transparent;
+	transition: 0.3s ease;
+
+	&:hover {
+		color: var(--blue-color);
+	}
+}
+
+.buildingData {
+	display: flex;
+	gap: 5%;
+}
+
+.buildingData>.inputBox {
+	text-align: center;
+	width: 30%;
+}
+
+.errorInput {
+	border: 1.5px solid red;
+	border-radius: 8px;
+}
+
+.error {
+	color: red;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.changeMessanger {
+	display: flex;
+	margin-top: 40px;
+	flex-direction: column;
+}
+
+.titleList {
+	font-size: 14px;
+	margin-bottom: 20px;
+	font-weight: 500;
+	color: var(--dark-color);
+}
+
+.comOptionsList {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+}
+
+.comOptionItem {
+	font-size: 12px;
+
+}
+
+.optionImg {
+	height: 20px;
+	width: 20px;
+	transition: 0.3s ease;
+}
+
+.activeOption {
+	width: 35px;
+	height: 35px;
+}
+
+@media(max-width: 800px) {
+	.main {
+		padding: 20px;
+	}
+
+	.btnExitProfile {
+		margin-bottom: 30px;
+	}
+
+
+
+	.wrapperInput>.inputField {
+		width: 100%;
+	}
+
+	.btnSwapTypeField {
+		font-size: 12px;
+
+	}
+
+	.profileForm {
+		grid-template-columns: 98%;
+		grid-template-rows: auto;
+		column-gap: 0;
+		row-gap: 30px;
+		padding: 0;
+	}
+
+	.categoryInfo {
+		font-size: 20px;
+	}
+
+	.inputField {
+		font-size: 14px;
+	}
+
+	.wrapperAddAndCont {
+		grid-template-columns: 98%;
+		column-gap: 0;
+		row-gap: 20px;
+	}
+
+
+
+
+	.buildingData>.inputBox {
+		font-size: 12px;
+	}
+
+	.addressAndContactData {
+		grid-column: 1 / -1;
+	}
+
+	.submitButton {
+		grid-row: auto;
+		justify-self: center;
+		width: 100%;
+		max-width: 300px;
+		font-size: 18px;
+		padding: 15px 25px;
+	}
 }

@@ -1,7 +1,6 @@
 import { Homepage } from './pages/Homepage/components/Homepage';
 import { Catalog } from './pages/Catalog/Catalog';
 import { Reviews } from './pages/Reviews/Reviews';
-import { Delivery } from './pages/Delivery/Delivery';
 import { Routes, Route } from 'react-router';
 import { MainLayout } from './MainLayout';
 import { FavoriteProducts } from './pages/FavoriteProducts/FavoriteProducts';
@@ -29,10 +28,6 @@ const App = () => {
                         path="reviews"
                         element={<Reviews />}
                     />
-                    <Route
-                        path="delivery"
-                        element={<Delivery />}
-                    />
 
                     {isAuth && (
                         <>
@@ -47,7 +42,7 @@ const App = () => {
                                 }
                             />
                             <Route
-                                path="me"
+                                path="profile"
                                 element={<Profile />}
                             />
                         </>

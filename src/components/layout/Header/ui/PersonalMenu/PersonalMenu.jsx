@@ -1,5 +1,8 @@
 import { useFavoriteStore } from '../../../../../pages/FavoriteProducts/store/useFavoriteStore';
 import { useShoppingCartStore } from '../../../../../pages/ShoppingCart/store/useShoppingCartStore';
+import { SvgFavoriteIcon } from '../../../../ui/FavoriteIcon';
+import { ProfileIcon } from '../../../../ui/ProfileIcon';
+import { SvgShoppingCartIcon } from '../../../../ui/ShoppingCartIcon';
 import styles from './PersonalMenu.module.css';
 import PersonalNavigationIcon from './PersonalNavigationIcon/PersonalNavigationIcon';
 const PersonalMenu = () => {
@@ -12,18 +15,20 @@ const PersonalMenu = () => {
     return (
         <ul className={styles.user_actions}>
             <PersonalNavigationIcon
-                icon="/src/assets/icons/svg/ShoppingCartIcon.svg"
+                children={<SvgShoppingCartIcon />}
                 counterProduct={countShoppingProduct}
                 href={'/shopping_cart'}
             />
             <PersonalNavigationIcon
-                icon="/src/assets/icons/svg/FavoriteIcon.svg"
+                children={
+                    <SvgFavoriteIcon fill="var(--white)" />
+                }
                 href={'/favorites'}
                 counterProduct={countFavorite}
             />
             <PersonalNavigationIcon
-                icon="/src/assets/icons/svg/ProfileIcon.svg"
-                href={'/me'}
+                children={<ProfileIcon />}
+                href={'/profile'}
             />
         </ul>
     );

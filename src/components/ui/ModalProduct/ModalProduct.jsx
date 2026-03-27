@@ -50,10 +50,18 @@ export const ModalProduct = (props) => {
     }
     const onSubmit = () => {
         if (!selectSize) return;
+
+        const productItem = { ...product };
+        delete productItem.availableSizes;
+        delete productItem.rating;
+        delete productItem.isFavorite;
+
         addToCart({
-            ...product,
+            ...productItem,
             size: selectSize,
         });
+
+        onClose();
     };
 
     return createPortal(

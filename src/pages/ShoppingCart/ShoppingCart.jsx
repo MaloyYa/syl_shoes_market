@@ -1,6 +1,7 @@
 import { ShoppingCartItem } from './ShoppingCartItem/ShoppingCartItem';
 import { useShoppingCartStore } from './store/useShoppingCartStore';
 import styles from './ShoppingCart.module.css';
+import { OrderForm } from './OrderForm/OrderForm';
 
 export const ShoppingCart = () => {
     const shoppingProducts = useShoppingCartStore(
@@ -37,6 +38,8 @@ export const ShoppingCart = () => {
                     {totalPriceShoppingCart} ₽
                 </span>
             </p>
+
+            <OrderForm products={shoppingProducts} />
         </main>
     );
 };

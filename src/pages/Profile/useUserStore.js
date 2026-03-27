@@ -28,7 +28,6 @@ export const useUserStore = create((set) => ({
                 [nameField]: valueField,
             },
         }));
-        console.log(`${nameField}: ${valueField}`);
     },
 
     updateAddressField: (nameField, valueField) => {

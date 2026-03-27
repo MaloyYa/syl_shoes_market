@@ -6,7 +6,6 @@ import { SvgSylLogo } from '../../ui/SylLogo';
 import { useAuthStore } from '../../../modules/auth/useAuthStore';
 import { SvgLoginIcon } from '../../ui/LoginIcon';
 import { useAuthFormStore } from '../../../modules/auth/AuthForm/useAuthFormStore';
-import { set } from 'react-hook-form';
 
 export const Header = () => {
     const isAuth = useAuthStore((state) => state.isAuth);

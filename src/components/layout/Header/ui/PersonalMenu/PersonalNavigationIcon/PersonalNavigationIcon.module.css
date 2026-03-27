@@ -54,10 +54,7 @@
 		width: 28px;
 	}
 
-	.nav_icon>img {
-		height: 16px;
-		width: 16px;
-	}
+
 
 	.icon_counter {
 		height: 12px;
@@ -66,35 +63,5 @@
 		top: -3px;
 		right: -1px;
 		line-height: 12px;
-	}
-}
-
-@media (max-width: 550px) {
-	.nav_icon {
-		height: 20px;
-		width: 20px;
-	}
-
-	.nav_icon>img {
-		height: 13.6px;
-		width: 13.6px;
-	}
-
-	.icon_counter {
-		width: 8px;
-		height: 8px;
-		line-height: 8px;
-	}
-}
-
-@media (max-width: 550px) {
-	.nav_icon {
-		height: 20px;
-		width: 20px;
-	}
-
-	.nav_icon>img {
-		height: 13.6px;
-		width: 13.6px;
 	}
 }

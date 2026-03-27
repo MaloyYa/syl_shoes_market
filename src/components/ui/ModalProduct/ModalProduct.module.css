@@ -254,7 +254,10 @@
 
 	.sizeGrid {
 		width: 100%;
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(6, min-content);
+		column-gap: 20px;
+		row-gap: 5px;
+		grid-template-rows: auto min-content;
 	}
 
 	.modalContent {
@@ -283,7 +286,16 @@
 }
 
 @media(max-width:425px) {
+	.modal {
+		padding: 18px;
+	}
+
 	.image {
 		max-height: 180px;
+	}
+
+	.sizeGrid {
+		width: 100%;
+		grid-template-columns: repeat(4, 60px);
 	}
 }

@@ -1,0 +1,233 @@
+.orderForm {
+	display: grid;
+	width: 95%;
+	grid-template-columns: repeat(2, 45%);
+	padding: 0 40px;
+	justify-content: center;
+	column-gap: 130px;
+	row-gap: 60px;
+	grid-template-rows: auto min-content;
+	margin-bottom: 40px;
+}
+
+
+/* styles for grid table of delivery */
+.tableDelivery {
+	justify-self: center;
+	grid-column: 1/-1;
+	display: grid;
+	width: 60%;
+	grid-template-columns: 30% 45% 25%;
+	grid-template-rows: auto min-content;
+	gap: 20px;
+}
+
+.columnTitle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	color: var(--dark-blue-color);
+}
+
+.headTable {
+	width: 100%;
+	display: grid;
+	grid-column: 1/4;
+	grid-template-columns: 30% 45% 25%;
+
+}
+
+.rowData {
+	grid-column: 1/4;
+	transition: 0.3s;
+	display: grid;
+	grid-template-columns: 30% 45% 25%;
+	padding: 10px;
+	border: 1.5px solid transparent;
+	cursor: pointer;
+}
+
+.selectRowData {
+	border: 1.5px solid var(--light-green-color);
+	border-radius: 8px;
+}
+
+.selectDelivery {
+	display: flex;
+	align-items: center;
+}
+
+.checkboxContainer {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	font-size: 14px;
+	font-weight: 400;
+	cursor: pointer;
+}
+
+.inputCheckbox {
+	appearance: none;
+	-webkit-appearance: none;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+	border: 2px solid var(--light-grey-color);
+	border-radius: 5px;
+	transition: all 0.3s;
+	flex-shrink: 0;
+}
+
+.inputCheckbox:checked {
+	background-color: var(--light-green-color);
+	border-color: var(--light-green-color);
+	background-image: url('/src/assets/icons/svg/Check.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 16px;
+}
+
+
+.descriptionBlock {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 20px;
+
+}
+
+.description {
+	font-weight: 300;
+	text-align: center;
+}
+
+.availabilityOfFitting {
+	font-weight: bold;
+	font-size: 18px;
+	color: var(--dark-blue-color);
+}
+
+.priceBlock {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+
+.btnSubmitOrder {
+	grid-column: 1 / -1;
+	grid-row: 4;
+
+	justify-self: start;
+
+	width: fit-content;
+
+	padding: 28px 53px;
+	border-radius: 50px;
+	font-size: 24px;
+	font-weight: bold;
+	background-color: var(--light-green-color);
+	color: var(--white);
+}
+
+
+
+@media(max-width:940px) {
+
+	.orderForm {
+		grid-template-columns: 98%;
+		grid-template-rows: auto;
+		column-gap: 10px;
+		row-gap: 30px;
+		padding: 20px;
+
+	}
+
+	.tableDelivery {
+		width: 95%;
+		grid-template-columns: 27% 45% 25%;
+	}
+
+	.selectDelivery {
+		justify-content: center;
+	}
+
+	.rowData {
+		padding: 5px;
+	}
+
+	.columnTitle {
+		font-size: 20px;
+	}
+
+	.methodImg {
+		width: 65px;
+		height: 30px;
+	}
+
+	.description,
+	.priceBlock {
+		font-size: 18px;
+	}
+
+	.availabilityOfFitting {
+		font-size: 16px;
+	}
+
+
+
+	.btnSubmitOrder {
+		grid-row: 5;
+	}
+}
+
+@media(max-width:640px) {
+	.orderForm {
+		padding: 10px;
+	}
+
+	.tableDelivery {
+		width: 100%;
+		grid-template-columns: 26% 47% 19%;
+
+	}
+
+	.methodImg {
+		width: 45px;
+		height: 25px;
+	}
+
+	.columnTitle {
+		font-size: 14px;
+	}
+
+	.description,
+	.priceBlock {
+		font-size: 14px;
+	}
+
+	.availabilityOfFitting {
+		font-size: 12px;
+	}
+}
+
+@media(max-width:425px) {
+	.checkboxContainer {
+		gap: 5px;
+	}
+
+	.tableDelivery {
+		grid-template-columns: 26% 40% 19%;
+
+	}
+
+	.inputCheckbox {
+		width: 18px;
+		height: 18px;
+	}
+}

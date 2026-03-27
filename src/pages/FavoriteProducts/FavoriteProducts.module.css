@@ -6,10 +6,10 @@
 }
 
 .messageNull {
+	font-size: 30px;
 	align-self: center;
 	margin: auto 0;
 	font-weight: bold;
-	font-size: 30px;
 	color: var(--light-grey-color);
 }
 
@@ -33,11 +33,19 @@
 		grid-template-columns: repeat(3, max-content);
 		margin-bottom: 80px;
 	}
+
+	.messageNull {
+		font-size: 24px;
+	}
 }
 
 @media(max-width: 600px) {
 	.gridFavorites {
 		grid-template-columns: repeat(2, max-content);
 		margin-bottom: 40px;
+	}
+
+	.messageNull {
+		font-size: 18px;
 	}
 }

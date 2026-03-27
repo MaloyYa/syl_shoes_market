@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import styles from './PersonalNavigationIcon.module.css';
 const PersonalNavigationIcon = ({
-    icon,
+    children,
     href,
     counterProduct,
 }) => {
@@ -10,10 +10,7 @@ const PersonalNavigationIcon = ({
             to={href || '/'}
             className={styles.nav_icon}
             aria-label="Описание действия">
-            <img
-                src={icon}
-                alt=""
-            />
+            {children}
             {counterProduct > 0 && (
                 <span className={styles.icon_counter}>
                     {counterProduct > 99
