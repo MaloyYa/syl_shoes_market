@@ -16,6 +16,7 @@ export const Header = () => {
     const handleLoginClick = () => {
         setVisibilityAuthForm(true);
     };
+
     return (
         <header className={styles.header}>
             <SvgSylLogo className={styles.site_logo} />
@@ -30,7 +31,7 @@ export const Header = () => {
                     <SvgLoginIcon
                         height="20px"
                         width="20px"
-                        fill="#007FFF"
+                        fill="var(--blue-color)"
                     />
                     Войти
                 </button>

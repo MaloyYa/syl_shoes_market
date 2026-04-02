@@ -4,15 +4,13 @@ import { createPortal } from 'react-dom';
 import { useFocus } from '../../../hooks/useFocus';
 import { useRef, useState } from 'react';
 import { LoginForm } from './Forms/LoginForm';
-import { useForm } from 'react-hook-form';
+
 import { RegistrationForm } from './Forms/RegistrationForm';
 import { useBlockScrollWindow } from '../../../hooks/useBlockScrollWindow';
 import { useAuthFormStore } from './useAuthFormStore';
 
 export const AuthForm = () => {
     const portal = document.getElementById('portal');
-
-    const { handleSubmit } = useForm();
 
     const isOpen = useAuthFormStore(
         (state) => state.isVisibleForm,
@@ -38,6 +36,7 @@ export const AuthForm = () => {
         setTimeout(() => {
             setIsBlocked(false);
         }, 700);
+        clearTimeout();
     };
 
     useFocus(isOpen, authModalRef, () =>
@@ -48,25 +47,21 @@ export const AuthForm = () => {
         return null;
     }
 
-    const onSubmit = (data) => {
-        console.log(JSON.stringify(data));
-    };
-
     if (!isOpen) {
         return null;
     } else {
         return createPortal(
             <div className={styles.overlay}>
                 <div
-                    onSubmit={handleSubmit(onSubmit)}
                     ref={authModalRef}
                     className={styles.authBlock}>
                     <button
                         disabled={isBlocked}
                         className={styles.btnClose}
-                        onClick={() =>
-                            setVisibleAuthForm(false)
-                        }>
+                        onClick={() => {
+                            event.preventDefault();
+                            setVisibleAuthForm(false);
+                        }}>
                         ×
                     </button>
                     <div className={styles.selectAction}>

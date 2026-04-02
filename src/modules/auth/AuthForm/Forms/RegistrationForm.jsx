@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/incompatible-library */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from '../Forms/FormStyle.module.css';
 import { IconToggleVisible } from '../../../../components/ui/IconToggleVisible';
@@ -9,17 +8,11 @@ export const RegistrationForm = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isSubmitSuccessful },
+        formState: { errors },
         watch,
     } = useForm({ mode: 'onChange' });
 
     const [typeField, setTypeField] = useState('password');
-
-    useEffect(() => {
-        if (isSubmitSuccessful) {
-            reset();
-        }
-    }, [isSubmitSuccessful, reset]);
 
     const onSubmit = (data) => {
         alert(JSON.stringify(data));

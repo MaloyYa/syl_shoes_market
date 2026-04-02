@@ -3,17 +3,55 @@ import { useForm } from 'react-hook-form';
 import styles from './FormStyle.module.css';
 import { IconToggleVisible } from '../../../../components/ui/IconToggleVisible';
 
+import { useAuthFormStore } from '../useAuthFormStore';
+import { userService } from '../../../../service/userService';
+
 export const LoginForm = () => {
+    const setVisibilityAuthForm = useAuthFormStore(
+        (state) => state.setVisibilityAuthForm,
+    );
+    const [isLoading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setError,
+        clearErrors,
     } = useForm({ mode: 'onChange' });
 
     const [typeField, setTypeField] = useState('password');
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+    const onSubmit = async (data) => {
+        const { email, password } = data;
+
+        try {
+            setLoading(true);
+
+            const isSuccess = await userService.login(
+                email,
+                password,
+            );
+
+            if (isSuccess) {
+                setVisibilityAuthForm(false);
+            } else {
+                setError('loginError', {
+                    message: 'Неверный email или пароль',
+                    type: 'manual',
+                });
+            }
+        } catch {
+            setError('loginError', {
+                message: 'Произошла ошибка при входе',
+                type: 'manual',
+            });
+        } finally {
+            setLoading(false);
+        }
+        setTimeout(() => {
+            clearErrors('loginError');
+        }, 3000);
+        clearTimeout();
     };
 
     return (
@@ -29,7 +67,7 @@ export const LoginForm = () => {
                     placeholder="Email"
                     maxLength={25}
                     className={styles.inputField}
-                    {...register('login', {
+                    {...register('email', {
                         required: 'Заполните поле логина',
                         pattern: {
                             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -37,9 +75,9 @@ export const LoginForm = () => {
                         },
                     })}
                 />
-                {errors.login && (
+                {errors.email && (
                     <span className={styles.error}>
-                        {errors.login.message}
+                        {errors.email.message}
                     </span>
                 )}
             </label>
@@ -92,11 +130,15 @@ export const LoginForm = () => {
                     </span>
                 )}
             </label>
-
+            {errors.loginError && (
+                <span className={styles.error}>
+                    {errors.loginError.message}
+                </span>
+            )}
             <button
                 type="submit"
                 className={styles.btnSubmit}>
-                Войти
+                {!isLoading ? 'Войти' : ' Проверяем данные'}
             </button>
         </form>
     );

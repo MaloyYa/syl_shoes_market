@@ -1,8 +1,8 @@
-import { BestProducts } from './BestProducts/BestProducts';
-import { Brands } from './Brands/Brands';
-import { HeroBunner } from './HeroBunner/HeroBunner';
-import { QualityService } from './QualityService/QualityService';
-import { mockProducts } from '../../../mock/mockProducts';
+import { BestProducts } from './components/BestProducts/BestProducts';
+import { Brands } from './components/Brands/Brands';
+import { HeroBunner } from './components/HeroBunner/HeroBunner';
+import { QualityService } from './components/QualityService/QualityService';
+import { mockProducts } from '../../mock/mockProducts';
 import { brands } from '/src/mock/mockBrands';
 
 export const Homepage = () => {

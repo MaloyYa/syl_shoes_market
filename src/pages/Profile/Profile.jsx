@@ -1,13 +1,17 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import styles from './Profile.module.css';
-import { useUserStore } from './useUserStore';
+
 import { ChangeFullname } from './components/ChangeFullname';
 import { ChangePassword } from './components/ChangePassword';
 import { ChangeAddress } from './components/ChangeAddress';
 import { ChangeContact } from './components/ChangeContact';
 import { ExitIcon } from '../../components/ui/ExitIcon';
+import { useAuthStore } from '../../modules/auth/useAuthStore';
+import { useNavigate } from 'react-router';
 export const Profile = () => {
-    const user = useUserStore((state) => state.user);
+    const user = useAuthStore((state) => state.user);
+    const logout = useAuthStore((state) => state.logout);
+    const navigate = useNavigate();
 
     const methods = useForm({
         defaultValues: {
@@ -33,7 +37,8 @@ export const Profile = () => {
         alert(JSON.stringify(data));
     };
     const handleExitButton = () => {
-        alert('exit');
+        logout();
+        navigate('/');
     };
     return (
         <main className={styles.main}>
