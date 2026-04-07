@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useAuthStore } from '../modules/auth/useAuthStore';
 import { BASE_URL } from '../api/api';
-//TODO переписать хук с использованием authApi
 export const useAuthUser = () => {
     const { setTokens, setUser, logout, checked } =
         useAuthStore();

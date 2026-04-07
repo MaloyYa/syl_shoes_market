@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from '../Forms/FormStyle.module.css';
 import { IconToggleVisible } from '../../../../components/ui/IconToggleVisible';
+import { userService } from '../../../../service/userService';
+import { useAuthFormStore } from '../useAuthFormStore';
 
 export const RegistrationForm = () => {
     const {
@@ -10,14 +12,53 @@ export const RegistrationForm = () => {
         reset,
         formState: { errors },
         watch,
-    } = useForm({ mode: 'onChange' });
+        setError,
+        clearErrors,
+    } = useForm({
+        mode: 'onChange',
+        defaultValues: {
+            name: '',
+            surname: '',
+            patronymic: '',
+            email: '',
+            social_link: '',
+            phone: '',
+            password: '',
+            confirmPassword: '',
+        },
+    });
+
+    const setVisibilityAuthForm = useAuthFormStore(
+        (state) => state.setVisibilityAuthForm,
+    );
 
     const [typeField, setTypeField] = useState('password');
+    const [isLoading, setLoading] = useState(false);
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
-        reset({ ...data });
+    const onSubmit = async (data) => {
+        setLoading(true);
+        const { confirmPassword, ...userData } = data;
+
+        const result = await userService.registration(
+            userData,
+        );
+
+        if (result.success) {
+            setVisibilityAuthForm(false);
+        } else {
+            setError('errorRegistration', {
+                type: 'manual',
+                message: result.message,
+            });
+            setTimeout(() => {
+                clearErrors('errorRegistration'), reset();
+            }, 3000);
+        }
+        setLoading(false);
     };
+
+    const phonePattern =
+        /^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/;
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
@@ -100,11 +141,36 @@ export const RegistrationForm = () => {
             </label>
             <label className={styles.inputBox}>
                 <span className={styles.titleField}>
+                    Номер телефона
+                </span>
+                <input
+                    className={styles.inputField}
+                    type="tel"
+                    inputMode="tel"
+                    maxLength={16}
+                    placeholder="+7 (___) ___-__-__"
+                    {...register('phone', {
+                        required: 'Введите номер телефона',
+                        pattern: {
+                            value: phonePattern,
+                            message:
+                                'Некорректный формат телефона',
+                        },
+                    })}
+                />
+                {errors.phone && (
+                    <span className={styles.error}>
+                        {errors.phone.message}
+                    </span>
+                )}
+            </label>
+            <label className={styles.inputBox}>
+                <span className={styles.titleField}>
                     Email
                 </span>
                 <input
                     className={styles.inputField}
-                    type="text"
+                    type="email"
                     {...register('email', {
                         required: 'Заполните это поле',
                         pattern: {
@@ -127,7 +193,7 @@ export const RegistrationForm = () => {
                 <input
                     className={styles.inputField}
                     type="text"
-                    {...register('socialLink', {
+                    {...register('social_link', {
                         required: 'Заполните это поле',
                         pattern: {
                             value: /^(https?:\/\/)?(www\.)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/,
@@ -136,9 +202,9 @@ export const RegistrationForm = () => {
                         },
                     })}
                 />
-                {errors.socialLink && (
+                {errors.social_link && (
                     <span className={styles.error}>
-                        {errors.socialLink.message}
+                        {errors.social_link.message}
                     </span>
                 )}
             </label>
@@ -177,6 +243,7 @@ export const RegistrationForm = () => {
                             validate: (value) => {
                                 return (
                                     value ===
+                                        // eslint-disable-next-line react-hooks/incompatible-library
                                         watch('password') ||
                                     'Пароли не совпадают'
                                 );
@@ -207,11 +274,17 @@ export const RegistrationForm = () => {
                     {errors.confirmPassword.message}
                 </span>
             )}
-
+            {errors?.errorRegistration && (
+                <span className={styles.error}>
+                    {errors.errorRegistration.message}
+                </span>
+            )}
             <button
                 type="submit"
                 className={styles.btnSubmit}>
-                Зарегистрироваться
+                {isLoading
+                    ? 'Проверяем ваши данные'
+                    : 'Зарегистрироваться'}
             </button>
         </form>
     );

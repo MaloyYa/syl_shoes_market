@@ -43,41 +43,66 @@ export const userService = {
         }
     },
     registration: async (userData) => {
-        const regustRegeistration = `${BASE_URL}/auth/register/`;
+        const requestRegistration = `${BASE_URL}/auth/register/`;
 
-        let isSuccesRegister = '';
-
-        const store = useAuthStore.getState();
-
-        const responseRegeistration = await fetch(
-            regustRegeistration,
-            {
-                headers: {
-                    accept: 'application/json',
-                    'Content-Type': 'application/json',
+        try {
+            const responseRegistration = await fetch(
+                requestRegistration,
+                {
+                    method: 'POST',
+                    headers: {
+                        accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
                 },
-                body: JSON.stringify(userData),
-            },
-        );
-        if (responseRegeistration.status === 201) {
-            const { userInfo } =
-                await regustRegeistration.json();
+            );
 
-            store.setUser(userInfo);
+            if (responseRegistration.status === 201) {
+                const { userInfo } =
+                    await responseRegistration.json();
 
-            isSuccesRegister = 'Success';
+                //устанавливаются токены
+                useAuthStore.getState().setUser(userInfo);
+                console.log(
+                    `Access token: ${
+                        useAuthStore.getState().access_token
+                    }`,
+                );
 
-            return isSuccesRegister;
-        } else if (responseRegeistration.status === 409) {
-            isSuccesRegister =
-                'Пользователь с таким email уже зарегистрирован';
+                //получение данных юзера по токену
+                const userInfoRequest = '/auth/me';
+                const userInfoResponse = await authApi(
+                    false,
+                    'GET',
+                    userInfoRequest,
+                );
 
-            return isSuccesRegister;
-        } else {
-            isSuccesRegister =
-                'Произошла ошибка в регистрации';
+                useAuthStore
+                    .getState()
+                    .setUser(userInfoResponse);
 
-            return isSuccesRegister;
+                return { success: true };
+            }
+
+            if (responseRegistration.status === 409) {
+                return {
+                    success: false,
+                    message:
+                        'Пользователь с таким email уже зарегистрирован',
+                };
+            }
+
+            return {
+                success: false,
+                message: 'Произошла ошибка при регистрации',
+            };
+        } catch (error) {
+            console.error('Registration failed:', error);
+            return {
+                success: false,
+                message: 'Ошибка сети или сервера',
+            };
         }
     },
 };

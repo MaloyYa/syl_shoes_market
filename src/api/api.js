@@ -1,4 +1,5 @@
 import { useAuthStore } from '../modules/auth/useAuthStore';
+import { refresh_tokens } from './refresh_tokens';
 
 export const BASE_URL = import.meta.env.VITE_API_URL;
 export const authApi = async (
@@ -35,19 +36,8 @@ export const authApi = async (
 			если не зарегистирован => 401
 			*/
             if (response.status === 401 && !forAuth) {
-                const requestInterceptor = `${BASE_URL}/auth/refresh/`;
-
-                const respInterceptor = await fetch(
-                    requestInterceptor,
-                    {
-                        method: method,
-                        headers: {
-                            Authorization: `Bearer ${store.refresh_token}`,
-                            'Content-Type':
-                                'application/json',
-                        },
-                    },
-                ).then((resp) => resp.json());
+                const respInterceptor =
+                    await refresh_tokens();
 
                 return respInterceptor;
             }
@@ -59,7 +49,12 @@ export const authApi = async (
         }
     } else if (method === 'GET') {
         try {
-            const userData = await fetch(
+            console.log(
+                ` ACCESS TOKEN FROM AUTH API:\tBearer ${
+                    useAuthStore.getState().access_token
+                }`,
+            );
+            const userDataResponse = await fetch(
                 `${BASE_URL}${url}`,
                 {
                     headers: {
@@ -70,8 +65,23 @@ export const authApi = async (
                         }`,
                     },
                 },
-            ).then((resp) => resp.json());
-            return userData;
+            );
+            if (userDataResponse.status === 401) {
+                await refresh_tokens();
+                const response = await fetch(
+                    `${BASE_URL}${url}`,
+                    {
+                        headers: {
+                            accept: 'application/json',
+                            Authorization: `Bearer ${
+                                useAuthStore.getState()
+                                    .access_token
+                            }`,
+                        },
+                    },
+                );
+            }
+            return userDataResponse;
         } catch (error) {
             console.error(error);
         }
