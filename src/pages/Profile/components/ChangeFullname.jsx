@@ -48,7 +48,7 @@ export const ChangeFullname = ({ titleSection }) => {
                     className={styles.inputField}
                     type="text"
                     placeholder="Отчество"
-                    {...register('patronomic', {
+                    {...register('patronymic', {
                         required: errorMessage,
                     })}
                 />

@@ -9,11 +9,9 @@ export const RegistrationForm = () => {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
         watch,
         setError,
-        clearErrors,
     } = useForm({
         mode: 'onChange',
         defaultValues: {
@@ -50,9 +48,6 @@ export const RegistrationForm = () => {
                 type: 'manual',
                 message: result.message,
             });
-            setTimeout(() => {
-                clearErrors('errorRegistration'), reset();
-            }, 3000);
         }
         setLoading(false);
     };

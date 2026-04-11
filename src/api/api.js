@@ -12,8 +12,6 @@ export const authApi = async (
 
     const request = `${BASE_URL}${url}`;
 
-    const store = useAuthStore.getState();
-
     if (method.toUpperCase() === 'POST' && forAuth) {
         try {
             const response = await fetch(request, {
@@ -49,11 +47,6 @@ export const authApi = async (
         }
     } else if (method === 'GET') {
         try {
-            console.log(
-                ` ACCESS TOKEN FROM AUTH API:\tBearer ${
-                    useAuthStore.getState().access_token
-                }`,
-            );
             const userDataResponse = await fetch(
                 `${BASE_URL}${url}`,
                 {
@@ -65,22 +58,7 @@ export const authApi = async (
                         }`,
                     },
                 },
-            );
-            if (userDataResponse.status === 401) {
-                await refresh_tokens();
-                const response = await fetch(
-                    `${BASE_URL}${url}`,
-                    {
-                        headers: {
-                            accept: 'application/json',
-                            Authorization: `Bearer ${
-                                useAuthStore.getState()
-                                    .access_token
-                            }`,
-                        },
-                    },
-                );
-            }
+            ).then((resp) => resp.json());
             return userDataResponse;
         } catch (error) {
             console.error(error);

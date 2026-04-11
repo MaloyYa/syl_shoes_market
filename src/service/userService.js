@@ -1,4 +1,5 @@
 import { authApi, BASE_URL } from '../api/api';
+import { refresh_tokens } from '../api/refresh_tokens';
 import { useAuthStore } from '../modules/auth/useAuthStore';
 
 export const userService = {
@@ -59,16 +60,14 @@ export const userService = {
             );
 
             if (responseRegistration.status === 201) {
-                const { userInfo } =
+                const { access_token, refresh_token } =
                     await responseRegistration.json();
 
                 //устанавливаются токены
-                useAuthStore.getState().setUser(userInfo);
-                console.log(
-                    `Access token: ${
-                        useAuthStore.getState().access_token
-                    }`,
-                );
+                useAuthStore.getState().setTokens({
+                    access_token,
+                    refresh_token,
+                });
 
                 //получение данных юзера по токену
                 const userInfoRequest = '/auth/me';
@@ -103,6 +102,136 @@ export const userService = {
                 success: false,
                 message: 'Ошибка сети или сервера',
             };
+        }
+    },
+    updateUserData: async (newUserData) => {
+        try {
+            const requestUpdateUserData = `${BASE_URL}/users/`;
+            newUserData.role = 'user';
+            const responseUpdateUserData = await fetch(
+                requestUpdateUserData,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${
+                            useAuthStore.getState()
+                                .access_token
+                        }`,
+                        accept: 'application/json',
+                    },
+                    body: JSON.stringify(newUserData),
+                },
+            );
+            if (responseUpdateUserData.status === 401) {
+                await refresh_tokens();
+                const dataInterceptorResponse = await fetch(
+                    requestUpdateUserData,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            accept: 'application/json',
+                            Authorization: `Bearer ${
+                                useAuthStore.getState()
+                                    .access_token
+                            }`,
+                            'Content-Type':
+                                'application/json',
+                        },
+                        body: JSON.stringify(newUserData),
+                    },
+                );
+                if (
+                    dataInterceptorResponse.status === 409
+                ) {
+                    return {
+                        succes: false,
+                        message:
+                            'Пользователь с таким номером или email уже зарегистрирован',
+                    };
+                }
+                const newUser =
+                    await dataInterceptorResponse.json();
+
+                return {
+                    success: true,
+                    message: 'Response success',
+                    newUser,
+                };
+            } else if (
+                responseUpdateUserData.status === 409
+            ) {
+                return {
+                    success: false,
+                    message:
+                        'Пользователь с таким номером или email уже зарегистрирован',
+                };
+            }
+            const newUser =
+                await responseUpdateUserData.json();
+            return {
+                success: true,
+                message: 'Response success',
+                newUser,
+            };
+        } catch {
+            return {
+                success: false,
+                message:
+                    'Произошла ошибка при выполнении запроса',
+            };
+        }
+    },
+    updateUserAddress: async (newUserAddress) => {
+        try {
+            const addressId =
+                useAuthStore.getState().user.addresses[0]
+                    .id;
+
+            const requestUpdateAddress = `${BASE_URL}/addresses/${addressId}`;
+            const responseUpdateAddress = await fetch(
+                requestUpdateAddress,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: `Bearer ${
+                            useAuthStore.getState()
+                                .access_token
+                        }`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newUserAddress),
+                },
+            );
+
+            if (responseUpdateAddress.status === 401) {
+                await refresh_tokens();
+                const addressInterceptorResponse =
+                    await fetch(requestUpdateAddress, {
+                        method: 'PATCH',
+                        headers: {
+                            accept: 'application/json',
+                            Authorization: `Bearer ${
+                                useAuthStore.getState()
+                                    .access_token
+                            }`,
+                            'Content-Type':
+                                'application/json',
+                        },
+                        body: JSON.stringify(
+                            newUserAddress,
+                        ),
+                    });
+                const newAddressFromInterceptor =
+                    await addressInterceptorResponse.json();
+                return newAddressFromInterceptor;
+            }
+            const newAddress =
+                await responseUpdateAddress.json();
+            return newAddress;
+        } catch (error) {
+            console.error(error.message);
         }
     },
 };

@@ -8,33 +8,190 @@ import { ChangeContact } from './components/ChangeContact';
 import { ExitIcon } from '../../components/ui/ExitIcon';
 import { useAuthStore } from '../../modules/auth/useAuthStore';
 import { useNavigate } from 'react-router';
+import { userService } from '../../service/userService';
+import { useState } from 'react';
+import { Notification } from '../../components/ui/Notification/Notification';
 export const Profile = () => {
     const user = useAuthStore((state) => state.user);
     const logout = useAuthStore((state) => state.logout);
+
+    const [loading, setLoading] = useState(false);
+
+    const [isFailed, setIsFailed] = useState(false);
+
+    const [isVisibleNotification, setVisibleNotification] =
+        useState(false);
     const navigate = useNavigate();
+
+    const [textNotification, setTextNotification] =
+        useState('');
 
     const methods = useForm({
         defaultValues: {
-            surname: user.surname,
-            name: user.name,
-            patronomic: user.patronomic,
-            email: user.email,
-            number: user.number,
-            social_link: user.social_link,
-            region: user?.address?.region,
-            city: user?.address?.city,
-            street: user?.address?.street,
-            house: user?.address?.house,
-            entrance: user?.address?.entrance,
-            apartment: user?.address?.apartment,
-            postscode: user?.address?.postcode,
+            surname: user?.surname || 'Не указано',
+            name: user?.name || 'Не указано',
+            patronymic: user?.patronymic || 'Не указано',
+            email: user?.email || 'Не указано',
+            phone: user?.phone || 'Не указано',
+            social_link: user?.social_link || 'Не указано',
+            region:
+                user?.addresses?.[0]?.region || 'Не указан',
+            city: user?.addresses?.[0]?.city || 'Не указан',
+            street:
+                user?.addresses?.[0]?.street || 'Не указан',
+            house:
+                user?.addresses?.[0]?.house || 'Не указан',
+            entrance:
+                user?.addresses?.[0]?.entrance ||
+                'Не указан',
+            apartment:
+                user?.addresses?.[0]?.apartment ||
+                'Не указан',
+            postcode:
+                user?.addresses?.[0]?.postcode ||
+                'Не указан',
         },
     });
-    const { handleSubmit } = methods;
+    const {
+        handleSubmit,
+        setError,
+        clearErrors,
+        reset,
+        formState: { errors },
+    } = methods;
 
-    const submit = (data, event) => {
-        event.preventDefault();
-        alert(JSON.stringify(data));
+    const createNotification = (isSuccess) => {
+        if (isSuccess) {
+            setVisibleNotification(true);
+            setIsFailed(false);
+            setTextNotification('Данные успешно обновлены');
+        } else {
+            setVisibleNotification(true);
+            setIsFailed(true);
+            setTextNotification(
+                'Произошла ошибка при выполнении запроса',
+            );
+        }
+    };
+
+    const checkDataForRequest = (data) => {
+        const {
+            id,
+            name,
+            surname,
+            patronymic,
+            social_link,
+
+            email: dataEmail,
+            phone: dataPhone,
+            confirmPassword: password,
+        } = data;
+
+        const { email, phone } = user;
+        const newUser = {
+            id,
+            name,
+            surname,
+            patronymic,
+            social_link,
+            password,
+        };
+        if (dataEmail === email && dataPhone === phone) {
+            return {
+                ...newUser,
+            };
+        } else if (dataEmail === email) {
+            return { ...newUser, phone: dataPhone };
+        } else if (dataPhone === phone) {
+            return { ...newUser, email: dataEmail };
+        }
+        return newUser;
+    };
+
+    const getDataFromForm = (data) => {
+        const {
+            region,
+            city,
+            street,
+            house,
+            entrance,
+            apartment,
+            postcode,
+        } = data;
+
+        return {
+            region,
+            city,
+            street,
+            house,
+            entrance,
+            apartment,
+            postcode,
+        };
+    };
+
+    const submit = async (data) => {
+        try {
+            setLoading(true);
+
+            const userData = checkDataForRequest(data);
+
+            const address = getDataFromForm(data);
+
+            const { success, message, newUser } =
+                await userService.updateUserData(userData);
+            if (success === false) {
+                setError('errorRequest', {
+                    type: 'manual',
+                    message,
+                });
+                createNotification(success);
+                return;
+            }
+
+            const newAddress =
+                await userService.updateUserAddress(
+                    address,
+                );
+
+            useAuthStore.getState().setNewUserData(newUser);
+            useAuthStore
+                .getState()
+                .setNewAddress(newAddress);
+
+            reset(
+                {
+                    surname: newUser?.surname || '',
+                    name: newUser.name || '',
+                    patronymic: newUser.patronymic || '',
+                    email: newUser.email || '',
+                    phone:
+                        useAuthStore.getState().user
+                            ?.phone || '',
+                    social_link: newUser.social_link || '',
+                    region: newAddress?.region || '',
+                    city: newAddress?.city || '',
+                    street: newAddress?.street || '',
+                    house: newAddress?.house || '',
+                    entrance: newAddress?.entrance || '',
+                    apartment: newAddress?.apartment || '',
+                    postcode: newAddress?.postcode || '',
+                },
+                {
+                    keepErrors: true,
+                    keepDirty: false,
+                    keepTouched: false,
+                },
+            );
+            createNotification(success);
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setLoading(false);
+            setTimeout(() => {
+                clearErrors('errorRequest');
+            }, 7000);
+        }
     };
     const handleExitButton = () => {
         logout();
@@ -77,13 +234,29 @@ export const Profile = () => {
                             <ChangeContact />
                         </div>
                     </div>
+                    {errors?.errorRequest && (
+                        <p style={{ color: 'red' }}>
+                            {errors?.errorRequest?.message}
+                        </p>
+                    )}
                     <button
                         type="submit"
                         className={styles.submitButton}>
-                        Сохранить изменения
+                        {loading
+                            ? 'Обновляем данные'
+                            : 'Сохранить изменения'}
                     </button>
                 </form>
             </FormProvider>
+            <Notification
+                isOpen={isVisibleNotification}
+                duration={4000}
+                isFailed={isFailed}
+                text={textNotification}
+                onClose={() => {
+                    setVisibleNotification(false);
+                }}
+            />
         </main>
     );
 };

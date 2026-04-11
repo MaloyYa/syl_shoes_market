@@ -4,21 +4,22 @@ export const SizeFilter = (props) => {
     const {
         selectedSizes = [],
         onSizeSelect,
-        availableSizes,
+        availableSizes = [],
     } = props;
     const handleSizeClick = (size) => {
         onSizeSelect(size);
     };
+
     return (
         <div className={style.sizeSection}>
             <h4 className={style.title}>Размеры</h4>
             <div className={style.sizeGrid}>
-                {availableSizes.map((size) => (
+                {(availableSizes || []).map((size) => (
                     <li
-                        key={size}
+                        key={size.label}
                         className={style.li}>
                         <SizeButton
-                            size={size}
+                            size={size.value}
                             isSelected={selectedSizes.includes(
                                 size,
                             )}

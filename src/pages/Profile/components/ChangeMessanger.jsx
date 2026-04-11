@@ -1,36 +1,31 @@
 import { useState } from 'react';
 import styles from '../Profile.module.css';
 import { useFormContext } from 'react-hook-form';
+import { COMMUNICATION_OPTIONS } from '../constants/communicationOptions.js';
 
-const COMMUNICATION_OPTIONS = [
-    {
-        pattern:
-            /^(https?:\/\/)?(www\.)?vk\.com\/(id\d+|[a-zA-Z0-9_]+)(\/.*)?$/,
-        img: '/src/assets/icons/links-icon/vk_logo.svg',
-        name: 'VK',
-    },
-    {
-        pattern:
-            /^(https?:\/\/)?(www\.)?t\.me\/([a-zA-Z0-9_+]+)(\/.*)?$/,
-        img: '/src/assets/icons/links-icon/telegram_logo.svg',
-        name: 'Telegram',
-    },
-    {
-        pattern:
-            /^(https?:\/\/)?(www\.)?max\.ru\/u\/[a-zA-Z0-9]+(\/.*)?$/,
-        img: '/src/assets/icons/links-icon/max_logo.png',
-        name: 'Max',
-    },
-];
 export const ChangeMessanger = () => {
     const {
         register,
         formState: { errors },
+        getValues,
     } = useFormContext();
+    //получить соц ссылку, чтобы сравнивать паттерны
+    const social_link = getValues('social_link') || '';
+    let indexInitialPattern = -1;
+    if (social_link && typeof social_link === 'string') {
+        indexInitialPattern =
+            COMMUNICATION_OPTIONS.findIndex((option) =>
+                option.pattern.test(social_link),
+            );
+    }
 
-    const [socialOption, setSocialOption] = useState(
-        COMMUNICATION_OPTIONS[0],
-    );
+    const defaultOption = COMMUNICATION_OPTIONS[0];
+    const initialOption =
+        indexInitialPattern >= 0
+            ? COMMUNICATION_OPTIONS[indexInitialPattern]
+            : defaultOption;
+    const [socialOption, setSocialOption] =
+        useState(initialOption);
     const handleChangeSocialOption = (newSocialOption) => {
         setSocialOption(newSocialOption);
     };

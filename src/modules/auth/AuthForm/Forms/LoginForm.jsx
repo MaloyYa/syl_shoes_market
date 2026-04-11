@@ -65,7 +65,7 @@ export const LoginForm = () => {
                 <input
                     type="text"
                     placeholder="Email"
-                    maxLength={25}
+                    maxLength={40}
                     className={styles.inputField}
                     {...register('email', {
                         required: 'Заполните поле логина',

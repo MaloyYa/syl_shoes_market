@@ -1,26 +1,59 @@
 import { FilterSidebar } from './components/FilterSidebar/FilterSidebar';
 import { BodyCatalog } from './components/BodyCatalog/BodyCatalog';
-import { mockProducts } from '../../mock/mockProducts';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './Catalog.module.css';
-import { useFilterOptions } from './hooks/useFilterOptions';
+import { getFilters } from './hooks/getFilters';
 
 export const Catalog = () => {
-    //здесь потом сделать ручку для получения всех товаров
-    const allProducts = mockProducts;
-
-    const filterOptions = useFilterOptions(allProducts);
+    const [filterData, setFilterData] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const [filters, setFilters] = useState({
         selectedSizes: [],
         price: {
-            minPrice: filterOptions.minPrice,
-            maxPrice: filterOptions.maxPrice,
+            minPrice: 0,
+            maxPrice: 0,
         },
         selectedBrands: [],
         selectedCategories: [],
         selectedColors: [],
     });
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const fetchFiltersData = async () => {
+            setLoading(true);
+            try {
+                const data = await getFilters();
+
+                if (isMounted) {
+                    setFilterData(data);
+                    console.log(
+                        'Полученные фильтры:',
+                        data,
+                    );
+                }
+            } catch (err) {
+                if (isMounted) {
+                    console.error(
+                        'Ошибка при загрузке фильтров:',
+                        err,
+                    );
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchFiltersData();
+
+        return () => {
+            isMounted = false; // Очистка эффекта
+        };
+    }, []);
 
     const handleSizeSelect = (size) => {
         setFilters((prev) => ({
@@ -32,13 +65,24 @@ export const Catalog = () => {
                 : [...prev.selectedSizes, size],
         }));
     };
-    const handlePriceChange = (newMin, newMax) => {
-        setFilters((prev) => ({
-            ...prev,
-            price: { minPrice: newMin, maxPrice: newMax },
-        }));
-        console.log(newMin, newMax);
-    };
+    const handlePriceChange = useCallback(
+        (newMin, newMax) => {
+            if (window.priceDebounceTimer) {
+                clearTimeout(window.priceDebounceTimer);
+            }
+
+            window.priceDebounceTimer = setTimeout(() => {
+                setFilters((prev) => ({
+                    ...prev,
+                    price: {
+                        minPrice: newMin,
+                        maxPrice: newMax,
+                    },
+                }));
+            }, 500);
+        },
+        [],
+    );
     const handleCheckBoxChange = (nameFilter, newValue) => {
         setFilters((prev) => {
             const currentArray = prev[nameFilter] || [];
@@ -59,8 +103,8 @@ export const Catalog = () => {
         setFilters({
             selectedSizes: [],
             price: {
-                minPrice: filterOptions.minPrice,
-                maxPrice: filterOptions.maxPrice,
+                minPrice: 0,
+                maxPrice: 0,
             },
             selectedBrands: [],
             selectedCategories: [],
@@ -69,15 +113,31 @@ export const Catalog = () => {
     };
     return (
         <main className={styles.main}>
-            <FilterSidebar
-                filterOptions={filterOptions}
-                handleSizeSelect={handleSizeSelect}
-                handlePriceChange={handlePriceChange}
-                handleCheckBoxChange={handleCheckBoxChange}
-                handleClearFilter={clearAllFilters}
-                filters={filters}
-            />
-            <BodyCatalog filtes={filters} />
+            {loading ? (
+                <p style={{ alignContent: 'center' }}>
+                    Загрузка фильтров...
+                </p>
+            ) : (
+                <FilterSidebar
+                    filterOptions={{
+                        availableSizes:
+                            filterData?.availableSizes ||
+                            [],
+                        brands: filterData?.brands || [],
+                        categories:
+                            filterData?.categories || [],
+                        colors: filterData?.colors || [],
+                    }}
+                    handleSizeSelect={handleSizeSelect}
+                    handlePriceChange={handlePriceChange}
+                    handleCheckBoxChange={
+                        handleCheckBoxChange
+                    }
+                    handleClearFilter={clearAllFilters}
+                    filters={filters}
+                />
+            )}
+            <BodyCatalog filters={filters} />
         </main>
     );
 };

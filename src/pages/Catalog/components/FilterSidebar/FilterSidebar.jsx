@@ -15,6 +15,7 @@ export const FilterSidebar = (props) => {
         handleClearFilter,
         filters,
     } = props;
+
     const {
         availableSizes,
         brands,

@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useUserStore } from '../../Profile/useUserStore';
+
 import { ChangeAddress } from '../../Profile/components/ChangeAddress';
 import { ChangeFullname } from '../../Profile/components/ChangeFullname';
 import { ChangeMessanger } from '../../Profile/components/ChangeMessanger';
@@ -7,25 +7,32 @@ import { ChangeEmailAndPhone } from '../../Profile/components/ChangeEmailAndPhon
 
 import styles from './OrderForm.module.css';
 import { useState } from 'react';
+import { useAuthStore } from '../../../modules/auth/useAuthStore';
 
 export const OrderForm = ({ products = [] }) => {
-    const user = useUserStore((state) => state.user);
+    const user = useAuthStore((state) => state.user);
 
     const methods = useForm({
         defaultValues: {
-            surname: user.surname,
-            name: user.name,
-            patronomic: user.patronomic,
+            surname: user?.surname || 'Не указан',
+            name: user?.name || 'Не указан',
+            patronymic: user.patronymic,
             email: user.email,
-            number: user.number,
+            phone: user.phone,
             social_link: user.social_link,
-            region: user?.address?.region,
-            city: user?.address?.city,
-            street: user?.address?.street,
-            house: user?.address?.house,
-            entrance: user?.address?.entrance,
-            apartment: user?.address?.apartment,
-            postscode: user?.address?.postcode,
+            region:
+                user?.addresses[0]?.region || 'Не указан',
+            city: user?.addresses[0]?.city || 'Не указан',
+            street:
+                user?.addresses[0]?.street || 'Не указан',
+            house: user?.addresses[0]?.house || 'Не указан',
+            entrance:
+                user?.addresses[0]?.entrance || 'Не указан',
+            apartment:
+                user?.addresses[0]?.apartment ||
+                'Не указан',
+            postcode:
+                user?.addresses[0]?.postcode || 'Не указан',
         },
     });
     const { handleSubmit } = methods;

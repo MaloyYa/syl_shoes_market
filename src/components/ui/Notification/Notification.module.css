@@ -1,0 +1,64 @@
+.overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	justify-content: center;
+	padding-top: 15vh;
+	z-index: 1000;
+}
+
+.notification {
+	position: relative;
+	background-color: var(--white);
+	display: flex;
+	gap: 30px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 28px;
+	padding: 20px;
+	color: var(--dark-color);
+	font-weight: 600;
+	max-height: 80px;
+	animation: appearance 0.5s;
+	box-shadow: -1px 5px 10px var(--dark-color);
+	overflow: hidden;
+}
+
+.progressBar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	height: 4px;
+	width: 100%;
+
+
+	animation-name: progress;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+@keyframes progress {
+	from {
+		width: 100%;
+	}
+
+	to {
+		width: 0%;
+	}
+}
+
+@keyframes appearance {
+
+	from {
+		opacity: 0;
+		transform: scaleY(-20px);
+		z-index: -1;
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(0px);
+		z-index: 10001;
+	}
+}

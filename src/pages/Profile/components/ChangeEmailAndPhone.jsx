@@ -35,7 +35,7 @@ export const ChangeEmailAndPhone = () => {
                     inputMode="tel"
                     maxLength={16}
                     placeholder="+7 (___) ___-__-__"
-                    {...register('number', {
+                    {...register('phone', {
                         required: 'Введите номер телефона',
                         pattern: {
                             value: phonePattern,
@@ -44,9 +44,9 @@ export const ChangeEmailAndPhone = () => {
                         },
                     })}
                 />
-                {errors.number && (
+                {errors.phone && (
                     <span className={styles.error}>
-                        {errors.number.message}
+                        {errors.phone.message}
                     </span>
                 )}
             </label>

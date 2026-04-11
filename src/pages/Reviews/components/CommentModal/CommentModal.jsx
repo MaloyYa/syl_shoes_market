@@ -5,10 +5,12 @@ import { useFocus } from '../../../../hooks/useFocus';
 import { useBlockScrollWindow } from '../../../../hooks/useBlockScrollWindow';
 import { useForm } from 'react-hook-form';
 import { StarRating } from '../../../../components/ui/StarRating/StarRating';
+import { useAuthStore } from '../../../../modules/auth/useAuthStore';
 
 export const CommentModal = (props) => {
     const { isOpen, onClose } = props;
     const portal = document.getElementById('portal');
+    const user = useAuthStore((state) => state.user);
 
     const modalRef = useRef(null);
 
@@ -20,11 +22,10 @@ export const CommentModal = (props) => {
         setError,
         clearErrors,
     } = useForm({
-        //TODO заменить наполнение данных из стора юзера
         defaultValues: {
-            id: 1,
-            name: 'Ivan',
-            surname: 'Yakovlev',
+            id: user?.id || '',
+            name: user?.name || '',
+            surname: user?.surname || '',
             comment: '',
             rating: 0,
         },

@@ -35,6 +35,46 @@ export const useAuthStore = create(
                 });
             },
 
+            setNewUserData: (newUserData) => {
+                set((state) => {
+                    return {
+                        user: {
+                            ...state.user,
+                            ...newUserData,
+                        },
+                    };
+                });
+            },
+            setNewAddress: (newAddress) => {
+                set((state) => {
+                    if (!state.user) return state;
+
+                    if (!newAddress) {
+                        return {
+                            user: {
+                                ...state.user,
+                                addresses: [],
+                            },
+                        };
+                    }
+
+                    const currentFirstAddress =
+                        state.user.addresses?.[0];
+
+                    const updatedAddress = {
+                        ...(currentFirstAddress || {}),
+                        ...newAddress,
+                    };
+
+                    return {
+                        user: {
+                            ...state.user,
+                            addresses: [updatedAddress],
+                        },
+                    };
+                });
+            },
+
             setTokens: (newTokens) => {
                 const { access_token, refresh_token } =
                     newTokens;

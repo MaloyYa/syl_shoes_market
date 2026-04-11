@@ -14,9 +14,9 @@ export const CheckBoxFilter = ({
             </h4>
             <ul className={styles.checkboxList}>
                 {options.map((option) => (
-                    <li key={option}>
+                    <li key={option.label}>
                         <CheckboxItem
-                            value={option}
+                            value={option.value}
                             isChecked={selectedValueParameters.includes(
                                 option,
                             )}
