@@ -32,6 +32,11 @@ export const Profile = () => {
             name: user?.name || 'Не указано',
             patronymic: user?.patronymic || 'Не указано',
             email: user?.email || 'Не указано',
+
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+
             phone: user?.phone || 'Не указано',
             social_link: user?.social_link || 'Не указано',
             region:
@@ -52,6 +57,7 @@ export const Profile = () => {
                 'Не указан',
         },
     });
+
     const {
         handleSubmit,
         setError,
@@ -130,6 +136,26 @@ export const Profile = () => {
         };
     };
 
+    const changeRequestForAddress = async (addressData) => {
+        if (
+            useAuthStore.getState().user.addresses
+                .length !== 0 &&
+            useAuthStore.getState().user.addresses?.[0]?.id
+        ) {
+            const newAddress =
+                await userService.updateUserAddress(
+                    addressData,
+                );
+            return newAddress;
+        } else {
+            const newAddress =
+                await userService.createAddress(
+                    addressData,
+                );
+            return newAddress;
+        }
+    };
+
     const submit = async (data) => {
         try {
             setLoading(true);
@@ -150,9 +176,7 @@ export const Profile = () => {
             }
 
             const newAddress =
-                await userService.updateUserAddress(
-                    address,
-                );
+                await changeRequestForAddress(address);
 
             useAuthStore.getState().setNewUserData(newUser);
             useAuthStore
@@ -168,6 +192,11 @@ export const Profile = () => {
                     phone:
                         useAuthStore.getState().user
                             ?.phone || '',
+
+                    oldPassword: '',
+                    newPassword: '',
+                    confirmPassword: '',
+
                     social_link: newUser.social_link || '',
                     region: newAddress?.region || '',
                     city: newAddress?.city || '',

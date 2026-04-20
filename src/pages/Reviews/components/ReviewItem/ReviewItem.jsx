@@ -1,13 +1,31 @@
 import { StarIcon } from '../../../../components/ui/StarIcon';
 import styles from './ReviewItem.module.css';
 export const ReviewItem = ({ comment, fill }) => {
-    const { name, text, rating, date } = comment;
+    const {
+        name,
+        surname,
+        comment_text,
+        rating,
+        created_at: isoDate,
+    } = comment;
     const stars = Array(rating).fill(0);
+    const year = new Date(isoDate).getFullYear();
+    const month = (new Date(isoDate).getMonth() + 1)
+        .toString()
+        .padStart(2, '0');
+    const day = new Date(isoDate)
+        .getDate()
+        .toString()
+        .padStart(2, '0');
 
     return (
         <div className={styles.commentBlock}>
-            <h3 className={styles.authorComment}>{name}</h3>
-            <p className={styles.textComment}>{text}</p>
+            <h3 className={styles.authorComment}>
+                {name} {surname}
+            </h3>
+            <p className={styles.textComment}>
+                {comment_text}
+            </p>
             <div className={styles.footerComment}>
                 <ul className={styles.ratingBlock}>
                     {stars.map((_, index) => (
@@ -21,7 +39,7 @@ export const ReviewItem = ({ comment, fill }) => {
                     ))}
                 </ul>
                 <p className={styles.dateCreateComment}>
-                    {date}
+                    {`${year}-${month}-${day}`}
                 </p>
             </div>
         </div>

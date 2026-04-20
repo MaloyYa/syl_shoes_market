@@ -3,7 +3,7 @@ import { BASE_URL } from './api';
 export const refresh_tokens = async () => {
     const store = useAuthStore.getState();
     const responseRefresh = await fetch(
-        `${BASE_URL}/auth/refresh/`,
+        `${BASE_URL}/auth/refresh`,
         {
             method: 'POST',
             headers: {

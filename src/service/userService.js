@@ -182,6 +182,46 @@ export const userService = {
             };
         }
     },
+    createAddress: async (addressData) => {
+        const request = `${BASE_URL}/addresses/`;
+        try {
+            const response = await fetch(request, {
+                method: 'POST',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: `Bearer ${
+                        useAuthStore.getState().access_token
+                    }`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(addressData),
+            });
+            if (response.status === 401) {
+                await refresh_tokens();
+                const interceptorResponse = await fetch(
+                    request,
+                    {
+                        method: 'POST',
+                        headers: {
+                            accept: 'application/json',
+                            Authorization: `Bearer ${
+                                useAuthStore.getState()
+                                    .access_token
+                            }`,
+                            'Content-Type':
+                                'application/json',
+                        },
+                        body: JSON.stringify(addressData),
+                    },
+                ).then((resp) => resp.json());
+                return interceptorResponse;
+            }
+            const address = await response.json();
+            return address;
+        } catch (error) {
+            console.error(error.message);
+        }
+    },
     updateUserAddress: async (newUserAddress) => {
         try {
             const addressId =
@@ -222,10 +262,9 @@ export const userService = {
                         body: JSON.stringify(
                             newUserAddress,
                         ),
-                    });
-                const newAddressFromInterceptor =
-                    await addressInterceptorResponse.json();
-                return newAddressFromInterceptor;
+                    }).then((resp) => resp.json());
+
+                return addressInterceptorResponse;
             }
             const newAddress =
                 await responseUpdateAddress.json();

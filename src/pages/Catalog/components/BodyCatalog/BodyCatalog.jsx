@@ -24,11 +24,10 @@ export const BodyCatalog = memo(({ filters }) => {
     return (
         <div className={styles.gridCatalog}>
             {products.map((product) => (
-                <li
+                <ProductCard
+                    product={product}
                     key={product.id}
-                    style={{ listStyle: 'none' }}>
-                    <ProductCard product={product} />
-                </li>
+                />
             ))}
         </div>
     );

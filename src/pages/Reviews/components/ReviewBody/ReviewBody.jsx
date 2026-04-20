@@ -1,12 +1,30 @@
 import styles from './ReviewBody.module.css';
 import { ReviewItem } from '../ReviewItem/ReviewItem';
-export const ReviewBody = ({ reviews = [] }) => {
+export const ReviewBody = ({
+    reviews = [],
+    isLoading,
+    isError,
+}) => {
     if (!reviews.length) {
         return (
             <div className={styles.gridReviews}>
                 <p className={styles.nullReviewMessage}>
                     Отзывы не найдены
                 </p>
+            </div>
+        );
+    }
+    if (isLoading) {
+        return (
+            <div className={styles.isLoading}>
+                Идет загрузка
+            </div>
+        );
+    }
+    if (isError) {
+        return (
+            <div className={styles.isLoading}>
+                {isError}
             </div>
         );
     }

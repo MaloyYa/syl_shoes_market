@@ -6,6 +6,8 @@ import { useBlockScrollWindow } from '../../../../hooks/useBlockScrollWindow';
 import { useForm } from 'react-hook-form';
 import { StarRating } from '../../../../components/ui/StarRating/StarRating';
 import { useAuthStore } from '../../../../modules/auth/useAuthStore';
+import { reviewService } from '../../../../service/reviewService';
+import { Notification } from '../../../../components/ui/Notification/Notification';
 
 export const CommentModal = (props) => {
     const { isOpen, onClose } = props;
@@ -13,6 +15,21 @@ export const CommentModal = (props) => {
     const user = useAuthStore((state) => state.user);
 
     const modalRef = useRef(null);
+
+    const [isFailed, setIsFailed] = useState(false);
+    const [textNotification, setTextNotification] =
+        useState('');
+    const [isVisibleNotification, setVisibleNotification] =
+        useState(false);
+
+    const createNotification = (
+        isFailed,
+        textNotification,
+    ) => {
+        setIsFailed(isFailed);
+        setTextNotification(textNotification);
+        setVisibleNotification(true);
+    };
 
     const {
         register,
@@ -23,10 +40,9 @@ export const CommentModal = (props) => {
         clearErrors,
     } = useForm({
         defaultValues: {
-            id: user?.id || '',
             name: user?.name || '',
             surname: user?.surname || '',
-            comment: '',
+            comment_text: '',
             rating: 0,
         },
     });
@@ -44,8 +60,7 @@ export const CommentModal = (props) => {
     if (!isOpen) {
         return null;
     }
-    //TODO переделать в запрос
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         if (rating === 0) {
             setError('rating', {
                 type: 'required',
@@ -55,13 +70,23 @@ export const CommentModal = (props) => {
         }
 
         clearErrors('rating');
+        try {
+            const review = {
+                rating: rating,
+                comment_text: data.comment_text,
+                created_at: new Date().toISOString(),
+            };
+            const { success, message } =
+                await reviewService.createReview(review);
 
-        data.date = new Date();
-        data.rating = rating;
-        alert(JSON.stringify(data));
+            createNotification(!success, message);
+        } catch (error) {
+            createNotification(true, error.message);
+        }
+
         reset();
         setRating(0);
-        onClose();
+        setTimeout(onClose, 5000);
     };
 
     return createPortal(
@@ -109,25 +134,7 @@ export const CommentModal = (props) => {
                             className={styles.inputField}
                             type="text"
                             readOnly
-                            {...register('surname', {
-                                required:
-                                    'Поле обязательно к заполнению',
-                                pattern: {
-                                    value: /^[A-Za-zА-Яа-яЁё\s]+$/,
-                                    message:
-                                        'Фамилия может содержать только буквы',
-                                },
-                                minLength: {
-                                    value: 4,
-                                    message:
-                                        'Фамилия должна содержать минимум 4 символа',
-                                },
-                                maxLength: {
-                                    value: 30,
-                                    message:
-                                        'Фамилия должна содержать максимум 30 символов',
-                                },
-                            })}
+                            {...register('surname')}
                         />
                         {errors.surname && (
                             <span className={styles.error}>
@@ -143,7 +150,7 @@ export const CommentModal = (props) => {
                         <textarea
                             placeholder="Ваш комментарий"
                             className={styles.inputField}
-                            {...register('comment', {
+                            {...register('comment_text', {
                                 required:
                                     'Поле обязательно к заполнению',
                                 minLength: {
@@ -153,9 +160,12 @@ export const CommentModal = (props) => {
                                 },
                             })}
                         />
-                        {errors.comment && (
+                        {errors.comment_text && (
                             <span className={styles.error}>
-                                {errors.comment.message}
+                                {
+                                    errors.comment_text
+                                        .message
+                                }
                             </span>
                         )}
                     </label>
@@ -170,6 +180,15 @@ export const CommentModal = (props) => {
                     </button>
                 </form>
             </div>
+            <Notification
+                isOpen={isVisibleNotification}
+                duration={4000}
+                isFailed={isFailed}
+                text={textNotification}
+                onClose={() => {
+                    setVisibleNotification(false);
+                }}
+            />
         </div>,
         portal,
     );

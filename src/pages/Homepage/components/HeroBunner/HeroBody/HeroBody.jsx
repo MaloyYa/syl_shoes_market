@@ -8,6 +8,10 @@ const HeroBody = () => {
                 <img
                     src="/src/assets/images/adidas-Nite-Jogger-Solar-Orange-G26313-Release-Date-2 2.svg"
                     alt=""
+                    onError={(event) => {
+                        event.target.src =
+                            '/src/assets/images/adidas-Nite-Jogger-Solar-Orange-G26313-Release-Date-2 2.svg';
+                    }}
                 />
             </div>
         </div>

@@ -9,16 +9,16 @@ export const getFilters = async () => {
             categoriesRes,
             colorsRes,
         ] = await Promise.all([
-            fetch(`${BASE_URL}/streams/filters/sizes/`, {
+            fetch(`${BASE_URL}/streams/filters/sizes`, {
                 headers: { accept: 'application/json' },
             }),
             fetch(`${BASE_URL}/brands/`, {
                 headers: { accept: 'application/json' },
             }),
-            fetch(`${BASE_URL}/streams/filters/category/`, {
+            fetch(`${BASE_URL}/streams/filters/category`, {
                 headers: { accept: 'application/json' },
             }),
-            fetch(`${BASE_URL}/streams/filters/color/`, {
+            fetch(`${BASE_URL}/streams/filters/color`, {
                 headers: { accept: 'application/json' },
             }),
         ]);

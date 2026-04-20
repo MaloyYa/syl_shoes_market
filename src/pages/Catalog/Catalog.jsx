@@ -18,7 +18,7 @@ export const Catalog = () => {
         selectedCategories: [],
         selectedColors: [],
     });
-
+    //TODO подправить
     useEffect(() => {
         let isMounted = true;
 
