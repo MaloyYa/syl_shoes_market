@@ -19,34 +19,16 @@ export const reviewService = {
             });
             if (response.status === 401) {
                 await refresh_tokens();
-                const interceptResponse = await fetch(
-                    request,
-                    {
-                        method: 'POST',
-                        headers: {
-                            accept: 'application/json',
-                            Authorization: `Bearer ${
-                                useAuthStore.getState()
-                                    .access_token
-                            }`,
-                            'Content-Type':
-                                'application/json',
-                        },
-                        body: JSON.stringify(review),
-                    },
+                return await reviewService.createReview(
+                    review,
                 );
-                if (interceptResponse.status === 'ok') {
-                    return {
-                        success: true,
-                        message:
-                            'Комментарий успешно создан',
-                    };
-                }
             }
-            return {
-                success: true,
-                message: 'Комментарий успешно создан',
-            };
+            if (response.status === 'ok') {
+                return {
+                    success: true,
+                    message: 'Комментарий успешно создан',
+                };
+            }
         } catch {
             return {
                 success: false,

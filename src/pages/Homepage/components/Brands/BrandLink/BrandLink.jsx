@@ -1,13 +1,15 @@
+import { Link } from 'react-router';
 import styles from './BrandLink.module.css';
-export const BrandLink = (props) => {
-    const { titleBrand, href, logo } = props;
+export const BrandLink = ({ brand }) => {
+    const { brand_name, brand_logo } = brand;
+
     return (
-        <a href={href !== undefined ? href : '/'}>
+        <Link to="/catalog">
             <img
                 className={styles.logoBrand}
-                src={logo}
-                alt={titleBrand}
+                src={brand_logo}
+                alt={brand_name}
             />
-        </a>
+        </Link>
     );
 };

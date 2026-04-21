@@ -198,23 +198,9 @@ export const userService = {
             });
             if (response.status === 401) {
                 await refresh_tokens();
-                const interceptorResponse = await fetch(
-                    request,
-                    {
-                        method: 'POST',
-                        headers: {
-                            accept: 'application/json',
-                            Authorization: `Bearer ${
-                                useAuthStore.getState()
-                                    .access_token
-                            }`,
-                            'Content-Type':
-                                'application/json',
-                        },
-                        body: JSON.stringify(addressData),
-                    },
-                ).then((resp) => resp.json());
-                return interceptorResponse;
+                return await userService.createAddress(
+                    addressData,
+                );
             }
             const address = await response.json();
             return address;
@@ -247,24 +233,9 @@ export const userService = {
 
             if (responseUpdateAddress.status === 401) {
                 await refresh_tokens();
-                const addressInterceptorResponse =
-                    await fetch(requestUpdateAddress, {
-                        method: 'PATCH',
-                        headers: {
-                            accept: 'application/json',
-                            Authorization: `Bearer ${
-                                useAuthStore.getState()
-                                    .access_token
-                            }`,
-                            'Content-Type':
-                                'application/json',
-                        },
-                        body: JSON.stringify(
-                            newUserAddress,
-                        ),
-                    }).then((resp) => resp.json());
-
-                return addressInterceptorResponse;
+                return await userService.updateUserAddress(
+                    newUserAddress,
+                );
             }
             const newAddress =
                 await responseUpdateAddress.json();

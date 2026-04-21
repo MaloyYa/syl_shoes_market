@@ -6,12 +6,18 @@ import { SvgShoppingCartIcon } from '../../../../ui/ShoppingCartIcon';
 import styles from './PersonalMenu.module.css';
 import PersonalNavigationIcon from './PersonalNavigationIcon/PersonalNavigationIcon';
 const PersonalMenu = () => {
-    const countFavorite = useFavoriteStore((state) =>
-        state.getSizeFavorite(),
-    );
-    const countShoppingProduct = useShoppingCartStore(
-        (state) => state.shoppingCart.length,
-    );
+    // const countFavorite = useFavoriteStore((state) =>
+    //     state.getSizeFavorite(),
+    // );
+    const countShoppingProduct =
+        useShoppingCartStore
+            .getState()
+            ?.shoppingCartData?.items.reduce(
+                (acc, current) => {
+                    return acc + current.quantity;
+                },
+                0,
+            ) || 0;
     return (
         <ul className={styles.user_actions}>
             <PersonalNavigationIcon
@@ -24,7 +30,7 @@ const PersonalMenu = () => {
                     <SvgFavoriteIcon fill="var(--white)" />
                 }
                 href={'/favorites'}
-                counterProduct={countFavorite}
+                counterProduct={0}
             />
             <PersonalNavigationIcon
                 children={<ProfileIcon />}

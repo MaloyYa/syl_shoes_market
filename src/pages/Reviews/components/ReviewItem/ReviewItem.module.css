@@ -65,7 +65,7 @@
 	}
 
 	.footerComment {
-		flex-direction: column;
+
 		align-items: start;
 		gap: 15px;
 	}

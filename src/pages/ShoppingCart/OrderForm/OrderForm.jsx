@@ -9,7 +9,7 @@ import styles from './OrderForm.module.css';
 import { useState } from 'react';
 import { useAuthStore } from '../../../modules/auth/useAuthStore';
 
-export const OrderForm = ({ products = [] }) => {
+export const OrderForm = () => {
     const user = useAuthStore((state) => state.user);
 
     const methods = useForm({
@@ -67,13 +67,7 @@ export const OrderForm = ({ products = [] }) => {
         availableMethodsDelivery[0],
     );
 
-    const submit = (data) => {
-        if (products.length) {
-            data.products = products;
-
-            alert(JSON.stringify(data));
-        }
-    };
+    const submit = (data) => {};
 
     return (
         <FormProvider {...methods}>
@@ -169,11 +163,9 @@ export const OrderForm = ({ products = [] }) => {
                                         className={
                                             styles.availabilityOfFitting
                                         }>
-                                        (
                                         {
                                             method.availabilityOfFitting
                                         }
-                                        )
                                     </p>
                                 </div>
                                 <div

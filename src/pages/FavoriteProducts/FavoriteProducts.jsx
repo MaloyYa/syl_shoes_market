@@ -1,17 +1,18 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SelectFilter } from '../../components/ui/SelectFilter/SelectFilter';
 import ProductCard from '../../components/ui/ProductCard/ProductCard';
 import styles from './FavoriteProducts.module.css';
-import { useFavoriteStore } from './store/useFavoriteStore';
+
+import { favoriteService } from '../../service/favoriteService';
 export const FavoriteProducts = () => {
-    const products = useFavoriteStore((state) =>
-        state.getFavorites(),
-    );
+    const [favorites, setFavorites] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+
     const [sort, setSort] = useState('default');
 
     const sortedProducts = useMemo(() => {
-        if (!products) return;
-        const copy = [...products];
+        if (!favorites) return;
+        const copy = [...favorites];
         switch (sort) {
             case 'price-asc':
                 return copy.sort(
@@ -23,14 +24,41 @@ export const FavoriteProducts = () => {
                 );
             case 'rating':
                 return copy.sort(
-                    (a, b) => b.rating - a.rating,
+                    (a, b) => b.avg_grade - a.avg_grade,
                 );
             default:
                 return copy;
         }
-    }, [products, sort]);
+    }, [favorites, sort]);
 
-    if (!products || products.length === 0) {
+    const handleDeleteFromFavorite = (id) => {
+        setTimeout(() => {
+            setFavorites((prev) =>
+                prev.filter(
+                    ({ product }) => product.id !== id,
+                ),
+            );
+        }, 2000);
+    };
+
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                setLoading(true);
+                const data =
+                    await favoriteService.getFavorites();
+                setFavorites(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFavorites();
+    }, []);
+
+    if (!favorites || favorites.length === 0) {
         return (
             <main className={styles.main}>
                 <p className={styles.messageNull}>
@@ -48,18 +76,30 @@ export const FavoriteProducts = () => {
                     onChange={setSort}
                 />
             </div>
-            <ul className={styles.gridFavorites}>
-                {sortedProducts &&
-                    sortedProducts.map((product) => (
-                        <li
-                            key={product.id}
-                            style={{ listStyle: 'none' }}>
-                            <ProductCard
-                                product={product}
-                            />
-                        </li>
-                    ))}
-            </ul>
+            {isLoading ? (
+                <div>Загружаем избранные товары</div>
+            ) : (
+                <ul className={styles.gridFavorites}>
+                    {sortedProducts &&
+                        sortedProducts.map(
+                            ({ product }) => (
+                                <li
+                                    key={product.id}
+                                    style={{
+                                        listStyle: 'none',
+                                    }}>
+                                    <ProductCard
+                                        product={product}
+                                        forFavorite={true}
+                                        handleDelete={
+                                            handleDeleteFromFavorite
+                                        }
+                                    />
+                                </li>
+                            ),
+                        )}
+                </ul>
+            )}
         </main>
     );
 };

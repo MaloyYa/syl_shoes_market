@@ -1,109 +1,249 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 export const useShoppingCartStore = create(
-    persist(
-        (set) => ({
-            shoppingCart: [],
+    devtools(
+        persist(
+            (set) => ({
+                shoppingCartData: null,
 
-            clearShoppingCart: () => {
-                set({
-                    shoppingCart: [],
-                });
-            },
+                setShoppingCartData: (
+                    newShoppingCartData,
+                ) => {
+                    set({
+                        shoppingCartData:
+                            newShoppingCartData,
+                    });
+                },
 
-            addToCart: (product) => {
-                set((state) => {
-                    const itemIndex =
-                        state.shoppingCart.findIndex(
-                            (item) =>
-                                item.id === product.id &&
-                                item.size === product.size,
-                        );
+                addToCart: (product) => {
+                    set((state) => {
+                        const indexItem =
+                            state.shoppingCartData.items.findIndex(
+                                (item) =>
+                                    item.product_id ===
+                                    product.id,
+                            );
+                        if (indexItem === -1) {
+                            const total_amount =
+                                state.shoppingCartData.items.reduce(
+                                    (acc, current) => {
+                                        const {
+                                            quantity,
+                                            price,
+                                        } = current;
+                                        return (
+                                            acc +
+                                            quantity * price
+                                        );
+                                    },
+                                    0,
+                                );
+                            return {
+                                shoppingCartData: {
+                                    ...state.shoppingCartData,
+                                    items: [
+                                        ...state
+                                            .shoppingCartData
+                                            .items,
+                                        product,
+                                    ],
+                                    total_amount:
+                                        total_amount +
+                                        product.price,
+                                },
+                            };
+                        } else {
+                            const copyArr = [
+                                ...state.shoppingCartData
+                                    .items,
+                            ];
 
-                    if (itemIndex !== -1) {
-                        const updatedCart = [
-                            ...state.shoppingCart,
-                        ];
+                            const newItem = {
+                                ...copyArr[indexItem],
+                            };
+                            copyArr[indexItem] = {
+                                ...copyArr[indexItem],
+                                quantity:
+                                    newItem.quantity + 1,
+                            };
 
-                        updatedCart[itemIndex] = {
-                            ...updatedCart[itemIndex],
-                            quantity:
-                                updatedCart[itemIndex]
-                                    .quantity + 1,
-                        };
+                            const total_amount =
+                                copyArr.reduce(
+                                    (acc, current) => {
+                                        const {
+                                            quantity,
+                                            price,
+                                        } = current;
+                                        return (
+                                            acc +
+                                            quantity * price
+                                        );
+                                    },
+                                    0,
+                                );
 
-                        return {
-                            shoppingCart: updatedCart,
-                        };
-                    }
+                            return {
+                                shoppingCartData: {
+                                    ...state.shoppingCartData,
+                                    items: [...copyArr],
+                                    total_amount,
+                                },
+                            };
+                        }
+                    });
+                },
 
-                    return {
-                        shoppingCart: [
-                            ...state.shoppingCart,
-                            { ...product, quantity: 1 },
-                        ],
-                    };
-                });
-            },
+                increaseProduct: (productId) => {
+                    set((state) => {
+                        console.log(productId);
+                        const index =
+                            state.shoppingCartData.items.findIndex(
+                                (item) =>
+                                    item.product_id ===
+                                    productId,
+                            );
 
-            decreaseQuantity: (product) => {
-                set((state) => {
-                    const index =
-                        state.shoppingCart.findIndex(
-                            (item) =>
-                                item.id === product.id &&
-                                item.size === product.size,
-                        );
+                        if (index !== -1) {
+                            const updatedItems =
+                                state.shoppingCartData.items.map(
+                                    (item, idx) => {
+                                        if (idx === index) {
+                                            return {
+                                                ...item,
+                                                quantity:
+                                                    (item.quantity ||
+                                                        1) +
+                                                    1,
+                                            };
+                                        }
+                                        return item;
+                                    },
+                                );
+                            const total_amount =
+                                updatedItems.reduce(
+                                    (
+                                        accumulator,
+                                        current,
+                                    ) => {
+                                        const {
+                                            quantity,
+                                            price,
+                                        } = current;
+                                        return (
+                                            accumulator +
+                                            quantity * price
+                                        );
+                                    },
+                                    0,
+                                );
 
-                    if (index === -1) return state;
+                            return {
+                                shoppingCartData: {
+                                    ...state.shoppingCartData,
+                                    items: updatedItems,
+                                    total_amount,
+                                },
+                            };
+                        }
 
-                    const item = state.shoppingCart[index];
-
-                    if (item.quantity === 1) {
-                        return {
-                            shoppingCart:
-                                state.shoppingCart.filter(
-                                    (_, i) => i !== index,
-                                ),
-                        };
-                    }
-
-                    const updatedCart = [
-                        ...state.shoppingCart,
-                    ];
-
-                    updatedCart[index] = {
-                        ...item,
-                        quantity: item.quantity - 1,
-                    };
-
-                    return {
-                        shoppingCart: updatedCart,
-                    };
-                });
-            },
-            removeFromShoppingCart: (product) => {
-                set((state) => {
-                    const index =
-                        state.shoppingCart.findIndex(
-                            (item) =>
-                                item.id === product.id &&
-                                item.size === product.size,
-                        );
-                    if (index === -1) {
                         return state;
-                    }
+                    });
+                },
 
-                    return {
-                        shoppingCart:
-                            state.shoppingCart.filter(
-                                (_, i) => i !== index,
-                            ),
-                    };
-                });
-            },
-        }),
-        { name: 'shoppingCart-storage' },
+                decreaseProduct: (productId) => {
+                    set((state) => {
+                        const updatedItems =
+                            state.shoppingCartData.items.map(
+                                (item) => {
+                                    if (
+                                        item.product_id ===
+                                        productId
+                                    ) {
+                                        const newQty =
+                                            (item.quantity ||
+                                                1) - 1;
+
+                                        return {
+                                            ...item,
+                                            quantity:
+                                                newQty > 0
+                                                    ? newQty
+                                                    : 1,
+                                        };
+                                    }
+                                    return item;
+                                },
+                            );
+                        const total_amount =
+                            updatedItems.reduce(
+                                (accumulator, current) => {
+                                    const {
+                                        quantity,
+                                        price,
+                                    } = current;
+                                    return (
+                                        accumulator +
+                                        quantity * price
+                                    );
+                                },
+                                0,
+                            );
+
+                        return {
+                            shoppingCartData: {
+                                ...state.shoppingCartData,
+                                items: updatedItems,
+                                total_amount,
+                            },
+                        };
+                    });
+                },
+
+                deleteProduct: (id) => {
+                    set((state) => {
+                        if (
+                            !state?.shoppingCartData?.items
+                        ) {
+                            return state;
+                        }
+                        const indexItem =
+                            state.shoppingCartData.items.findIndex(
+                                (item) => item.id === id,
+                            );
+
+                        if (indexItem !== -1) {
+                            const copyArr =
+                                state.shoppingCartData.items.filter(
+                                    (_, index) =>
+                                        index !== indexItem,
+                                );
+                            const total_amount =
+                                copyArr.reduce(
+                                    (acc, current) => {
+                                        const {
+                                            quantity,
+                                            price,
+                                        } = current;
+                                        return (
+                                            acc +
+                                            quantity * price
+                                        );
+                                    },
+                                    0,
+                                );
+                            return {
+                                shoppingCartData: {
+                                    ...state.shoppingCartData,
+                                    items: copyArr,
+                                    total_amount,
+                                },
+                            };
+                        }
+                    });
+                },
+            }),
+            { name: 'shoppingCart-store' },
+        ),
     ),
 );

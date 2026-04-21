@@ -1,14 +1,9 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {
-    Autoplay,
-    Navigation,
-    Pagination,
-} from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import { useRef } from 'react';
 import styles from './Brands.module.css';
 import { BrandLink } from './BrandLink/BrandLink';
-export const Brands = (props) => {
-    const { brands } = props;
+export const Brands = ({ brands }) => {
     const swiperRef = useRef();
     const goToPrev = () => swiperRef.current?.slidePrev();
     const goToNext = () => swiperRef.current?.slideNext();
@@ -39,26 +34,13 @@ export const Brands = (props) => {
                         1024: { spaceBetween: 20 },
                         1200: { spaceBetween: 24 },
                     }}>
-                    {brands.map(
-                        (
-                            { logoBrand, titleBrand, href },
-                            id,
-                        ) => (
-                            <SwiperSlide
-                                key={id}
-                                style={{ width: '190px' }}>
-                                {logoBrand && (
-                                    <BrandLink
-                                        titleBrand={
-                                            titleBrand
-                                        }
-                                        href={href}
-                                        logo={logoBrand}
-                                    />
-                                )}
-                            </SwiperSlide>
-                        ),
-                    )}
+                    {brands.map((brand, id) => (
+                        <SwiperSlide
+                            key={id}
+                            style={{ width: '190px' }}>
+                            <BrandLink brand={brand} />
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
                 <button
                     onClick={goToNext}
