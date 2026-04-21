@@ -4,7 +4,7 @@ import { devtools, persist } from 'zustand/middleware';
 export const useShoppingCartStore = create(
     devtools(
         persist(
-            (set) => ({
+            (set, get) => ({
                 shoppingCartData: null,
 
                 setShoppingCartData: (
@@ -15,7 +15,18 @@ export const useShoppingCartStore = create(
                             newShoppingCartData,
                     });
                 },
-
+                getQuantity: () => {
+                    const quantity =
+                        get().shoppingCartData?.items.reduce(
+                            (acc, current) => {
+                                return (
+                                    acc + current.quantity
+                                );
+                            },
+                            0,
+                        ) || 0;
+                    return quantity;
+                },
                 addToCart: (product) => {
                     set((state) => {
                         const indexItem =
@@ -96,12 +107,10 @@ export const useShoppingCartStore = create(
 
                 increaseProduct: (productId) => {
                     set((state) => {
-                        console.log(productId);
                         const index =
                             state.shoppingCartData.items.findIndex(
                                 (item) =>
-                                    item.product_id ===
-                                    productId,
+                                    item.id === productId,
                             );
 
                         if (index !== -1) {
@@ -157,7 +166,7 @@ export const useShoppingCartStore = create(
                             state.shoppingCartData.items.map(
                                 (item) => {
                                     if (
-                                        item.product_id ===
+                                        item.id ===
                                         productId
                                     ) {
                                         const newQty =

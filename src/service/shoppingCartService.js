@@ -119,7 +119,9 @@ export const shoppingCartService = {
                     quantity,
                 );
             }
-            const isSuccess = response.status === 'ok';
+
+            const isSuccess = !!response.ok;
+
             const { quantity: count } =
                 await response.json();
             return { isSuccess, count };

@@ -28,18 +28,18 @@ export const ShoppingCartItem = memo(
         );
 
         const handleIncreaseProduct = async (
-            item_id,
+            id,
             quantity,
         ) => {
             try {
                 const { isSuccess, count: newQuantity } =
                     await shoppingCartService.changeQuantityItem(
-                        item_id,
+                        id,
                         Number(quantity + 1),
                     );
 
                 newQuantity && setQuantity(newQuantity);
-                isSuccess && decreaseProduct(item_id);
+                isSuccess && increaseProduct(id);
             } catch (error) {
                 console.log(error.message);
             }
@@ -55,10 +55,7 @@ export const ShoppingCartItem = memo(
                         item_id,
                         Number(quantity - 1),
                     );
-                if (isSuccess) {
-                    setQuantity(newQuantity);
-                    increaseProduct(item_id);
-                }
+
                 newQuantity && setQuantity(newQuantity);
                 isSuccess && decreaseProduct(item_id);
             } catch (error) {

@@ -9,20 +9,14 @@ const PersonalMenu = () => {
     // const countFavorite = useFavoriteStore((state) =>
     //     state.getSizeFavorite(),
     // );
-    const countShoppingProduct =
-        useShoppingCartStore
-            .getState()
-            ?.shoppingCartData?.items.reduce(
-                (acc, current) => {
-                    return acc + current.quantity;
-                },
-                0,
-            ) || 0;
+    const getQuantity = useShoppingCartStore(
+        (state) => state.getQuantity,
+    );
     return (
         <ul className={styles.user_actions}>
             <PersonalNavigationIcon
                 children={<SvgShoppingCartIcon />}
-                counterProduct={countShoppingProduct}
+                counterProduct={getQuantity()}
                 href={'/shopping_cart'}
             />
             <PersonalNavigationIcon
