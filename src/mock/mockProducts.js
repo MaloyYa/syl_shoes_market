@@ -10,7 +10,6 @@ export const mockProducts = [
         color: 'Черный',
         rating: 4.5,
         availableSizes: [40, 41, 42, 43, 44],
-        isFavorite: false,
     },
     {
         id: 2,
@@ -23,7 +22,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.7,
         availableSizes: [42, 43, 44],
-        isFavorite: true,
     },
     {
         id: 3,
@@ -36,7 +34,6 @@ export const mockProducts = [
         color: 'Красный',
         rating: 4.2,
         availableSizes: [40, 41, 42],
-        isFavorite: false,
     },
     {
         id: 4,
@@ -49,7 +46,6 @@ export const mockProducts = [
         color: 'Черный',
         rating: 4.8,
         availableSizes: [42, 43, 44, 45],
-        isFavorite: true,
     },
     {
         id: 5,
@@ -62,7 +58,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.1,
         availableSizes: [40, 41, 42],
-        isFavorite: false,
     },
     {
         id: 6,
@@ -75,7 +70,6 @@ export const mockProducts = [
         color: 'Серый',
         rating: 4.3,
         availableSizes: [41, 42, 43],
-        isFavorite: false,
     },
     {
         id: 7,
@@ -88,7 +82,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.0,
         availableSizes: [39, 40, 41],
-        isFavorite: false,
     },
     {
         id: 8,
@@ -101,7 +94,6 @@ export const mockProducts = [
         color: 'Красный',
         rating: 4.9,
         availableSizes: [43, 44, 45],
-        isFavorite: false,
     },
     {
         id: 9,
@@ -114,7 +106,6 @@ export const mockProducts = [
         color: 'Черный',
         rating: 4.4,
         availableSizes: [41, 42, 43],
-        isFavorite: false,
     },
     {
         id: 10,
@@ -127,7 +118,6 @@ export const mockProducts = [
         color: 'Синий',
         rating: 4.1,
         availableSizes: [40, 41, 42],
-        isFavorite: false,
     },
     {
         id: 11,
@@ -140,7 +130,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.6,
         availableSizes: [41, 42, 43, 44],
-        isFavorite: true,
     },
     {
         id: 12,
@@ -153,7 +142,6 @@ export const mockProducts = [
         color: 'Синий',
         rating: 4.3,
         availableSizes: [40, 41, 42],
-        isFavorite: false,
     },
     {
         id: 13,
@@ -166,7 +154,6 @@ export const mockProducts = [
         color: 'Синий',
         rating: 4.5,
         availableSizes: [41, 42, 43],
-        isFavorite: false,
     },
     {
         id: 14,
@@ -179,7 +166,6 @@ export const mockProducts = [
         color: 'Черный',
         rating: 4.2,
         availableSizes: [40, 41, 42],
-        isFavorite: false,
     },
     {
         id: 15,
@@ -192,7 +178,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.4,
         availableSizes: [41, 42, 43],
-        isFavorite: false,
     },
     {
         id: 16,
@@ -205,7 +190,6 @@ export const mockProducts = [
         color: 'Серый',
         rating: 4.7,
         availableSizes: [42, 43, 44],
-        isFavorite: false,
     },
     {
         id: 17,
@@ -218,7 +202,6 @@ export const mockProducts = [
         color: 'Черный',
         rating: 4.5,
         availableSizes: [41, 42, 43],
-        isFavorite: false,
     },
     {
         id: 18,
@@ -231,7 +214,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.3,
         availableSizes: [40, 41, 42],
-        isFavorite: false,
     },
     {
         id: 19,
@@ -244,7 +226,6 @@ export const mockProducts = [
         color: 'Белый',
         rating: 4.6,
         availableSizes: [42, 43, 44],
-        isFavorite: false,
     },
     {
         id: 20,
@@ -257,6 +238,5 @@ export const mockProducts = [
         color: 'Зеленый',
         rating: 4.2,
         availableSizes: [39, 40, 41],
-        isFavorite: true,
     },
 ];

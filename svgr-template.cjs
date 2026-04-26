@@ -4,7 +4,7 @@ const template = (
     { tpl },
 ) => {
     const exportName = /^\d/.test(componentName)
-        ? `Svg${componentName}`
+        ? `${componentName}`
         : componentName;
 
     return tpl`

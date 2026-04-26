@@ -21,10 +21,10 @@ export const Profile = () => {
 
     const [isVisibleNotification, setVisibleNotification] =
         useState(false);
-    const navigate = useNavigate();
-
     const [textNotification, setTextNotification] =
         useState('');
+
+    const navigate = useNavigate();
 
     const methods = useForm({
         defaultValues: {

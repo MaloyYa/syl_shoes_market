@@ -8,66 +8,141 @@ import { ChangeEmailAndPhone } from '../../Profile/components/ChangeEmailAndPhon
 import styles from './OrderForm.module.css';
 import { useState } from 'react';
 import { useAuthStore } from '../../../modules/auth/useAuthStore';
+import { orderService } from '../../../service/orderService';
+import { userService } from '../../../service/userService';
+import { useShoppingCartStore } from '../store/useShoppingCartStore';
 
-export const OrderForm = () => {
+const rusPost = '/src/assets/icons/svg/mailRussiaIcon.svg';
+const sdekPost = '/src/assets/icons/svg/sdekIcon.svg';
+const availableMethodsDelivery = [
+    {
+        icon: rusPost,
+        alt: 'Почта России',
+        description: 'Почта России',
+        availabilityOfFitting: 'без примерки',
+        price: 620,
+    },
+    {
+        icon: sdekPost,
+        alt: 'СДЭК',
+        description: 'СДЭК курьер до двери',
+        availabilityOfFitting: 'Есть примерка',
+        price: 440,
+    },
+    {
+        icon: sdekPost,
+        alt: 'СДЭК',
+        description: 'СДЭК Пункт выдачи заказов',
+        availabilityOfFitting: 'Есть примерка',
+        price: 300,
+    },
+];
+
+const getDataFromData = (data) => {
+    const {
+        region,
+        city,
+        street,
+        house,
+        entrance,
+        apartment,
+        postcode,
+    } = data;
+
+    return {
+        region,
+        city,
+        street,
+        house,
+        entrance,
+        apartment,
+        postcode,
+    };
+};
+
+export const OrderForm = ({
+    createNotification,
+    isLoading,
+    setLoading,
+    setShoppingCartData,
+}) => {
     const user = useAuthStore((state) => state.user);
+    const addressId = user?.addresses?.[0]?.id || '';
 
     const methods = useForm({
         defaultValues: {
-            surname: user?.surname || 'Не указан',
-            name: user?.name || 'Не указан',
+            surname: user?.surname || '',
+            name: user?.name || '',
             patronymic: user.patronymic,
-            email: user.email,
-            phone: user.phone,
-            social_link: user.social_link,
-            region:
-                user?.addresses[0]?.region || 'Не указан',
-            city: user?.addresses[0]?.city || 'Не указан',
-            street:
-                user?.addresses[0]?.street || 'Не указан',
-            house: user?.addresses[0]?.house || 'Не указан',
-            entrance:
-                user?.addresses[0]?.entrance || 'Не указан',
-            apartment:
-                user?.addresses[0]?.apartment ||
-                'Не указан',
-            postcode:
-                user?.addresses[0]?.postcode || 'Не указан',
+            email: user.email || '',
+            phone: user.phone || '',
+            social_link: user.social_link || '',
+            region: user?.addresses[0]?.region || '',
+            city: user?.addresses[0]?.city || '',
+            street: user?.addresses[0]?.street || '',
+            house: user?.addresses[0]?.house || '',
+            entrance: user?.addresses[0]?.entrance || '',
+            apartment: user?.addresses[0]?.apartment || '',
+            postcode: user?.addresses[0]?.postcode || '',
         },
     });
     const { handleSubmit } = methods;
 
-    const rusPost =
-        '/src/assets/icons/svg/mailRussiaIcon.svg';
-    const sdekPost = '/src/assets/icons/svg/sdekIcon.svg';
-    const availableMethodsDelivery = [
-        {
-            icon: rusPost,
-            alt: 'Почта России',
-            description: 'Почта России',
-            availabilityOfFitting: 'без примерки',
-            price: 620,
-        },
-        {
-            icon: sdekPost,
-            alt: 'СДЭК',
-            description: 'СДЭК курьер до двери',
-            availabilityOfFitting: 'Есть примерка',
-            price: 440,
-        },
-        {
-            icon: sdekPost,
-            alt: 'СДЭК',
-            description: 'СДЭК Пункт выдачи заказов',
-            availabilityOfFitting: 'Есть примерка',
-            price: 300,
-        },
-    ];
     const [deliveryMethod, setDeliveryMethod] = useState(
         availableMethodsDelivery[0],
     );
 
-    const submit = (data) => {};
+    const submit = async (data) => {
+        try {
+            setLoading(true);
+            let targetAddressId = addressId;
+
+            if (addressId === '') {
+                const address = getDataFromData(data);
+                const newAddress =
+                    await userService.createAddress(
+                        address,
+                    );
+                useAuthStore
+                    .getState()
+                    .setNewAddress(newAddress);
+                targetAddressId = newAddress.id;
+            }
+
+            const { success, id } =
+                await orderService.createOrderFromShoppingCart(
+                    targetAddressId,
+                );
+            setLoading(false);
+            if (success) {
+                createNotification(
+                    true,
+                    'Заказ успешно создан',
+                );
+                setTimeout(() => {
+                    setShoppingCartData([]);
+                    useShoppingCartStore
+                        .getState()
+                        .setShoppingCartData({
+                            items: [],
+                            total_amount: 0,
+                        });
+                }, 2000);
+            } else {
+                createNotification(
+                    false,
+                    'Произошла ошибка при создании заказа',
+                );
+            }
+        } catch {
+            createNotification(
+                false,
+                'Произошла ошибка при создании заказа',
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <FormProvider {...methods}>
@@ -185,7 +260,9 @@ export const OrderForm = () => {
                 <button
                     type="submit"
                     className={styles.btnSubmitOrder}>
-                    Подтвердить заказ
+                    {isLoading
+                        ? 'Создаем заказ...'
+                        : 'Оформить заказ'}
                 </button>
             </form>
         </FormProvider>

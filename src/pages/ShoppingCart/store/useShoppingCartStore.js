@@ -30,7 +30,7 @@ export const useShoppingCartStore = create(
                 addToCart: (product) => {
                     set((state) => {
                         const indexItem =
-                            state.shoppingCartData.items.findIndex(
+                            state.shoppingCartData?.items.findIndex(
                                 (item) =>
                                     item.product_id ===
                                     product.id,

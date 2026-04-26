@@ -60,28 +60,6 @@ export const RegistrationForm = () => {
             className={styles.form}>
             <label className={styles.inputBox}>
                 <span className={styles.titleField}>
-                    Имя
-                </span>
-                <input
-                    className={styles.inputField}
-                    type="text"
-                    {...register('name', {
-                        required: 'Заполните это поле',
-                        pattern: {
-                            value: /^[A-Za-zА-Яа-яЁё\s]+$/,
-                            message:
-                                'Имя может содержать только буквы',
-                        },
-                    })}
-                />
-                {errors.name && (
-                    <span className={styles.error}>
-                        {errors.name.message}
-                    </span>
-                )}
-            </label>
-            <label className={styles.inputBox}>
-                <span className={styles.titleField}>
                     Фамилия
                 </span>
                 <input
@@ -112,6 +90,29 @@ export const RegistrationForm = () => {
                     </span>
                 )}
             </label>
+            <label className={styles.inputBox}>
+                <span className={styles.titleField}>
+                    Имя
+                </span>
+                <input
+                    className={styles.inputField}
+                    type="text"
+                    {...register('name', {
+                        required: 'Заполните это поле',
+                        pattern: {
+                            value: /^[A-Za-zА-Яа-яЁё\s]+$/,
+                            message:
+                                'Имя может содержать только буквы',
+                        },
+                    })}
+                />
+                {errors.name && (
+                    <span className={styles.error}>
+                        {errors.name.message}
+                    </span>
+                )}
+            </label>
+
             <label className={styles.inputBox}>
                 <span className={styles.titleField}>
                     Отчество

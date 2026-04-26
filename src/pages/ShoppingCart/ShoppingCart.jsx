@@ -4,16 +4,43 @@ import styles from './ShoppingCart.module.css';
 import { OrderForm } from './OrderForm/OrderForm';
 import { useEffect, useState } from 'react';
 import { shoppingCartService } from '../../service/shoppingCartService';
+import { Notification } from '../../components/ui/Notification/Notification';
 
 export const ShoppingCart = () => {
-    const [isLoading, setLoading] = useState(false);
-
     const initialCartData = useShoppingCartStore(
         (state) => state.shoppingCartData,
     );
+    const [isLoading, setLoading] = useState(false);
+
+    const [isLoadingCreateOrder, setLoadingCreateOrder] =
+        useState(false);
 
     const [shoppingCartData, setShoppingCartData] =
-        useState(initialCartData);
+        useState(
+            initialCartData || {
+                items: [],
+                total_amount: 0,
+            },
+        );
+
+    const [isFailed, setIsFailed] = useState(false);
+
+    const [isVisibleNotification, setVisibleNotification] =
+        useState(false);
+    const [textNotification, setTextNotification] =
+        useState('');
+
+    const createNotification = (isSuccess, message) => {
+        if (isSuccess) {
+            setVisibleNotification(true);
+            setIsFailed(false);
+            setTextNotification(message);
+        } else {
+            setVisibleNotification(true);
+            setIsFailed(true);
+            setTextNotification(message);
+        }
+    };
 
     const handleDeleteShoppingItem = (id) => {
         setTimeout(() => {
@@ -33,6 +60,7 @@ export const ShoppingCart = () => {
             setLoading(true);
             const data =
                 await shoppingCartService.getShoppingCart();
+
             useShoppingCartStore
                 .getState()
                 .setShoppingCartData(data);
@@ -43,7 +71,10 @@ export const ShoppingCart = () => {
         fetchShoppingCart();
     }, []);
 
-    if (!shoppingCartData?.items.length) {
+    if (
+        !shoppingCartData?.items ||
+        shoppingCartData.items.length === 0
+    ) {
         return (
             <main className={styles.main}>
                 <p>Корзина пуста</p>
@@ -86,16 +117,31 @@ export const ShoppingCart = () => {
                             className={
                                 styles.totalPriceValue
                             }>
-                            {
-                                useShoppingCartStore.getState()
-                                    .shoppingCartData
-                                    .total_amount
-                            }
+                            {shoppingCartData?.total_amount ||
+                                0}
                             ₽
                         </span>
                     </p>
 
-                    <OrderForm />
+                    <OrderForm
+                        isLoading={isLoadingCreateOrder}
+                        setLoading={setLoadingCreateOrder}
+                        createNotification={
+                            createNotification
+                        }
+                        setShoppingCartData={
+                            setShoppingCartData
+                        }
+                    />
+                    <Notification
+                        isOpen={isVisibleNotification}
+                        duration={1750}
+                        isFailed={isFailed}
+                        text={textNotification}
+                        onClose={() => {
+                            setVisibleNotification(false);
+                        }}
+                    />
                 </>
             )}
         </main>

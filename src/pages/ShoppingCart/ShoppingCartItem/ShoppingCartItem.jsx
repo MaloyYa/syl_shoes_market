@@ -7,7 +7,7 @@ import { useShoppingCartStore } from '../store/useShoppingCartStore';
 export const ShoppingCartItem = memo(
     ({ product, handleDelete }) => {
         const {
-            brand_logo: image,
+            logo: image,
             title: name,
             article,
             size,

@@ -109,6 +109,7 @@ export const ModalProduct = (props) => {
                                 onSubmit();
                             } else {
                                 setVisibilityAuthForm(true);
+                                setSelectSize({});
                                 onClose();
                             }
                         }}>
@@ -150,7 +151,7 @@ export const ModalProduct = (props) => {
 
                         <button
                             type="submit"
-                            disabled={!selectSize}
+                            disabled={!selectSize?.size}
                             className={styles.btnAddCart}>
                             Добавить в корзину
                         </button>
@@ -159,7 +160,10 @@ export const ModalProduct = (props) => {
                 <button
                     type="button"
                     className={styles.btnClose}
-                    onClick={onClose}>
+                    onClick={() => {
+                        setSelectSize({});
+                        onClose();
+                    }}>
                     ×
                 </button>
             </div>
