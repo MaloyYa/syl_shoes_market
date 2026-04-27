@@ -24,15 +24,12 @@ export const Catalog = () => {
 
         const fetchFiltersData = async () => {
             setLoading(true);
+            console.log();
             try {
                 const data = await getFilters();
 
                 if (isMounted) {
                     setFilterData(data);
-                    console.log(
-                        'Полученные фильтры:',
-                        data,
-                    );
                 }
             } catch (err) {
                 if (isMounted) {
@@ -83,22 +80,40 @@ export const Catalog = () => {
         },
         [],
     );
-    const handleCheckBoxChange = (nameFilter, newValue) => {
-        setFilters((prev) => {
-            const currentArray = prev[nameFilter] || [];
-            console.log(currentArray);
-            return {
-                ...prev,
-                [nameFilter]: currentArray.includes(
-                    newValue,
-                )
-                    ? currentArray.filter(
-                          (value) => value !== newValue,
-                      )
-                    : [...currentArray, newValue],
-            };
-        });
-    };
+    const handleCheckBoxChange = useCallback(
+        (nameFilter, newValue) => {
+            if (window.checkboxDebounceTimer) {
+                clearTimeout(window.checkboxDebounceTimer);
+            }
+            window.checkboxDebounceTimer = setTimeout(
+                () => {
+                    setFilters((prev) => {
+                        const currentArray =
+                            prev[nameFilter] || [];
+                        return {
+                            ...prev,
+                            [nameFilter]:
+                                currentArray.includes(
+                                    newValue,
+                                )
+                                    ? currentArray.filter(
+                                          (value) =>
+                                              value !==
+                                              newValue,
+                                      )
+                                    : [
+                                          ...currentArray,
+                                          newValue,
+                                      ],
+                        };
+                    });
+                },
+                500,
+            );
+        },
+        [],
+    );
+
     const clearAllFilters = () => {
         setFilters({
             selectedSizes: [],

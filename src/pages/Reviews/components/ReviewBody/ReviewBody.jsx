@@ -5,7 +5,7 @@ export const ReviewBody = ({
     isLoading,
     isError,
 }) => {
-    if (!reviews.length) {
+    if (!reviews?.length) {
         return (
             <div className={styles.gridReviews}>
                 <p className={styles.nullReviewMessage}>

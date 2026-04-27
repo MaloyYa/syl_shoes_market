@@ -117,7 +117,7 @@ export const OrderForm = ({
             if (success) {
                 createNotification(
                     true,
-                    'Заказ успешно создан',
+                    `Заказ ${id} успешно создан`,
                 );
                 setTimeout(() => {
                     setShoppingCartData([]);

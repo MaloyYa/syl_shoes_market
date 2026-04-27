@@ -13,17 +13,24 @@ export const CheckBoxFilter = ({
                 {title}
             </h4>
             <ul className={styles.checkboxList}>
-                {options.map((option) => (
-                    <li key={option.label}>
-                        <CheckboxItem
-                            value={option.value}
-                            isChecked={selectedValueParameters.includes(
-                                option,
-                            )}
-                            action={() => onToggle(option)}
-                        />
-                    </li>
-                ))}
+                {options.map((option) => {
+                    const optionValue =
+                        option?.value || option;
+
+                    return (
+                        <li key={optionValue}>
+                            <CheckboxItem
+                                value={optionValue}
+                                isChecked={selectedValueParameters.includes(
+                                    optionValue,
+                                )}
+                                action={() =>
+                                    onToggle(optionValue)
+                                }
+                            />
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );

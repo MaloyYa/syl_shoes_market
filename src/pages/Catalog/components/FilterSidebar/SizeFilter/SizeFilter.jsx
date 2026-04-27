@@ -7,7 +7,7 @@ export const SizeFilter = (props) => {
         availableSizes = [],
     } = props;
     const handleSizeClick = (size) => {
-        onSizeSelect(size);
+        onSizeSelect(size.value);
     };
 
     return (
@@ -21,7 +21,7 @@ export const SizeFilter = (props) => {
                         <SizeButton
                             size={size.value}
                             isSelected={selectedSizes.includes(
-                                size,
+                                size.value,
                             )}
                             onClick={() =>
                                 handleSizeClick(size)

@@ -11,6 +11,7 @@ export const BodyCatalog = memo(({ filters }) => {
         productsService.getProducts(
             setIsLoading,
             setProducts,
+            filters,
         );
     }, [filters]);
 
