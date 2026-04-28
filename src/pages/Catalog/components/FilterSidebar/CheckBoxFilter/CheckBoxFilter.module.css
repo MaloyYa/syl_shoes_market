@@ -42,7 +42,7 @@
 .inputCheckbox:checked {
 	background-color: var(--light-green-color);
 	border-color: var(--light-green-color);
-	background-image: url('/src/assets/icons/svg/Check.svg');
+	background-image: url('/assets/icons/svg/Check.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 16px;

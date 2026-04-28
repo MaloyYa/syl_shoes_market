@@ -22,6 +22,13 @@ export const BodyCatalog = memo(({ filters }) => {
             </div>
         );
     }
+    if (products.length === 0) {
+        return (
+            <div className={styles.loading}>
+                <p>Товары не найдены</p>
+            </div>
+        );
+    }
     return (
         <div className={styles.gridCatalog}>
             {products.map((product) => (

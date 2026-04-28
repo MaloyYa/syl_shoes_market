@@ -24,6 +24,7 @@ export const Reviews = () => {
     const [sortBy, setSortBy] = useState('default');
 
     const sortedReviews = useMemo(() => {
+        if (!reviews?.length) return [];
         const sorted = [...reviews];
 
         switch (sortBy) {

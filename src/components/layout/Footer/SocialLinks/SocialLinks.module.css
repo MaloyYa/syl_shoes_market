@@ -1,5 +1,6 @@
 .social_links {
 	display: flex;
+	align-items: center;
 	max-width: 150px;
 	justify-content: space-between;
 }

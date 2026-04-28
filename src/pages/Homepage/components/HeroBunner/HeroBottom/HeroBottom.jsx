@@ -6,12 +6,12 @@ const HeroBottom = () => {
             <HeroLink
                 href={'/catalog'}
                 text="Adidas Yeezy Boost"
-                src="/src/assets/images/yellow_shoes.svg"
+                src="/assets/images/yellow_shoes.svg"
             />
             <HeroLink
                 href={'/catalog'}
                 text="Nike Air Max"
-                src="/src/assets/images/white_shoes.svg"
+                src="/assets/images/white_shoes.svg"
             />
         </div>
     );

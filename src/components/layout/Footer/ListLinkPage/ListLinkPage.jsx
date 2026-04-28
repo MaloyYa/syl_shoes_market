@@ -9,11 +9,7 @@ export const ListLinkPage = () => {
             />
             <PageLinkItem
                 title="Доставка"
-                href="/delivery"
-            />
-            <PageLinkItem
-                title="Гарантия"
-                href=""
+                href="/"
             />
         </div>
     );

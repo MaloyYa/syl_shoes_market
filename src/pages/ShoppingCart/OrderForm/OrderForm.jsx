@@ -12,8 +12,10 @@ import { orderService } from '../../../service/orderService';
 import { userService } from '../../../service/userService';
 import { useShoppingCartStore } from '../store/useShoppingCartStore';
 
-const rusPost = '/src/assets/icons/svg/mailRussiaIcon.svg';
-const sdekPost = '/src/assets/icons/svg/sdekIcon.svg';
+const rusPost =
+    '/assets/icons/delivery-icons/mailRussiaIcon.svg';
+const sdekPost =
+    '/assets/icons/delivery-icons/sdekIcon.svg';
 const availableMethodsDelivery = [
     {
         icon: rusPost,

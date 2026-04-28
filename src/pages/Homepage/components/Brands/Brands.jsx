@@ -7,6 +7,7 @@ export const Brands = ({ brands }) => {
     const swiperRef = useRef();
     const goToPrev = () => swiperRef.current?.slidePrev();
     const goToNext = () => swiperRef.current?.slideNext();
+    if (!brands?.length) return null;
     return (
         <section className={styles.brand_section}>
             <h2 className={styles.section_title}>Бренды</h2>
