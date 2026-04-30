@@ -16,15 +16,15 @@ export const FavoriteProducts = () => {
         switch (sort) {
             case 'price-asc':
                 return copy.sort(
-                    (a, b) => a.price - b.price,
+                    ({product: a}, {product: b}) => a.price  - b.price ,
                 );
             case 'price-desc':
                 return copy.sort(
-                    (a, b) => b.price - a.price,
+                    ({product: a}, {product: b}) => b.price - a.price,
                 );
             case 'rating':
                 return copy.sort(
-                    (a, b) => b.avg_grade - a.avg_grade,
+                    ({product: a}, {product: b}) => b.avg_grade - a.avg_grade,
                 );
             default:
                 return copy;

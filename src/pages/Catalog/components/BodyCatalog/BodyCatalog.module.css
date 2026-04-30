@@ -13,6 +13,7 @@
 	gap: 25px;
 	align-items: start;
 	grid-template-rows: min-content;
+	min-height: 60vh;
 
 }
 
@@ -42,7 +43,7 @@
 	}
 }
 
-@media(max-width:425px) {
+@media(max-width:495px) {
 	.gridCatalog {
 		grid-template-columns: repeat(2, 1fr);
 	}

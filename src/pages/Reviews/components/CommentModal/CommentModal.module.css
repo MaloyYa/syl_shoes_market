@@ -30,7 +30,8 @@
 	background-color: var(--white);
 	border-radius: 40px;
 	padding: 35px;
-	width: 50%;
+	width: 80%;
+	max-width: 700px;
 	min-width: 300px;
 	animation: appearance 0.5s ease-in-out;
 }
@@ -71,12 +72,13 @@
 
 .inputField {
 	border-radius: 8px;
-	font-size: 14px;
+	font-size: 16px;
 	padding: 10px;
 	border: 1px solid #ccc;
 	width: 98%;
 	resize: none;
 	transition: border-color 0.3s ease;
+	touch-action: manipulation;
 
 	&:focus {
 		border-color: var(--blue-color);
@@ -97,6 +99,15 @@
 	color: var(--white);
 	background-color: var(--blue-color);
 	border-radius: 12px;
+
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+	&:hover {
+		transform: scale(1.05);
+		-webkit-box-shadow: 2.5px 7px 4px -2px rgba(34, 60, 80, 0.2);
+		-moz-box-shadow: 2.5px 7px 4px -2px rgba(34, 60, 80, 0.2);
+		box-shadow: 2.5px 7px 4px -2px rgba(34, 60, 80, 0.2);
+	}
 }
 
 @media(max-width: 920px) {
@@ -111,22 +122,17 @@
 		border-radius: 28px;
 	}
 
-	.titleField {
-		font-size: 14px;
-	}
 
 	.inputField {
-		font-size: 12px;
+
 		padding: 6px;
 	}
 
 	.error {
-
 		font-size: 12px;
 	}
 
 	.btnSubmit {
-		font-size: 14px;
 		padding: 15px 20px;
 	}
 }

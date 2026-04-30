@@ -8,6 +8,7 @@
 	box-shadow: 5px 10px 30px var(--blue-shadow);
 	padding: 30px 95px 30px 55px;
 	position: relative;
+	min-height: min-content;
 }
 
 .shoppingItemImg {
@@ -185,8 +186,10 @@
 
 @media(max-width:475px) {
 	.shoppingCartItem {
-		gap: 15px;
+		gap: 8px;
 		border-radius: 30px;
+		min-height: 200px;
+		padding: 10px 20px;
 	}
 
 	.deleteProductFromCart {
@@ -198,18 +201,20 @@
 
 	}
 
-	.shoppingItemImg,
-	.shoppingItemInfo {
-		height: 120px;
-	}
-
-	.shoppingCartItem {
-		padding: 10px 35px 10px 15px;
-	}
-
 	.shoppingItemImg {
+		height: 140px;
 		width: 140px;
+		object-fit: cover;
 	}
+
+	.shoppingItemInfo {
+		gap: 10px;
+
+	}
+
+
+
+
 
 	.titleProduct,
 	.priceProduct {
@@ -227,16 +232,5 @@
 
 	.redactQuantityBlock {
 		max-width: 45px;
-	}
-}
-
-@media(max-width:390px) {
-	.shoppingItemImg {
-		width: 120px;
-		height: 100px;
-	}
-
-	.shoppingItemInfo {
-		height: 100px;
 	}
 }

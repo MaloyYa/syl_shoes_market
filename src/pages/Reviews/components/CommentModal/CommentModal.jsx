@@ -158,6 +158,10 @@ export const CommentModal = (props) => {
                                     message:
                                         'Комментарий должен содержать не менее 40 символов',
                                 },
+                                maxLength:{
+                                    value: 320,
+                                    message: 'Комментарий не может содержать более 320 символов'
+                                }
                             })}
                         />
                         {errors.comment_text && (

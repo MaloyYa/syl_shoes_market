@@ -23,7 +23,7 @@ export const reviewService = {
                     review,
                 );
             }
-            if (response.status === 'ok') {
+            if (response.ok) {
                 return {
                     success: true,
                     message: 'Комментарий успешно создан',

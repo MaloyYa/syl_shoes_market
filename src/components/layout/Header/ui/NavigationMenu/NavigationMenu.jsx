@@ -45,7 +45,8 @@ const NavigationMenu = () => {
                                 isActive
                                     ? styles.activeLink
                                     : ''
-                            }>
+                            }
+                            onClick={() => setOpen(false)}>
                             {linkPage.label}
                         </NavLink>
                     </li>

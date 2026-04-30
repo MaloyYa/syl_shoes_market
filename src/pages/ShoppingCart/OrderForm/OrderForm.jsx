@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 import { ChangeAddress } from '../../Profile/components/ChangeAddress';
 import { ChangeFullname } from '../../Profile/components/ChangeFullname';
@@ -6,7 +7,6 @@ import { ChangeMessanger } from '../../Profile/components/ChangeMessanger';
 import { ChangeEmailAndPhone } from '../../Profile/components/ChangeEmailAndPhone';
 
 import styles from './OrderForm.module.css';
-import { useState } from 'react';
 import { useAuthStore } from '../../../modules/auth/useAuthStore';
 import { orderService } from '../../../service/orderService';
 import { userService } from '../../../service/userService';

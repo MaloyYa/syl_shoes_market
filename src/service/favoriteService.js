@@ -69,7 +69,8 @@ export const favoriteService = {
                 return await favoriteService.addToFavorite(
                     product_id,
                 );
-            } else if (response.ok) {
+            } 
+            if (response.ok) {
                 return {
                     success: true,
                     message: 'Товар добавлен в избранное',
