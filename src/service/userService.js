@@ -28,7 +28,7 @@ export const userService = {
         store.setTokens({ access_token, refresh_token });
 
         try {
-            const getUserRequest = '/auth/me/';
+            const getUserRequest = '/auth/me';
 
             const responseUserData = await authApi(
                 false,
@@ -44,7 +44,7 @@ export const userService = {
         }
     },
     registration: async (userData) => {
-        const requestRegistration = `${BASE_URL}/auth/register/`;
+        const requestRegistration = `${BASE_URL}/auth/register`;
 
         try {
             const responseRegistration = await fetch(
