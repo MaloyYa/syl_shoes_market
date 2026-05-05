@@ -11,7 +11,7 @@ export const userService = {
         queryParams.append('username', email);
         queryParams.append('password', password);
 
-        const request = '/auth/login/';
+        const request = '/auth/login';
 
         const response = await authApi(
             true,
