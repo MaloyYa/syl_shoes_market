@@ -16,6 +16,7 @@
 	padding: 30px;
 	width: 80%;
 	animation: appearance 0.5s ease-in-out;
+	max-height: 550px;
 }
 
 @keyframes appearance {

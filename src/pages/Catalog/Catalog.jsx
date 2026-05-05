@@ -12,7 +12,7 @@ export const Catalog = () => {
         selectedSizes: [],
         price: {
             minPrice: 0,
-            maxPrice: 0,
+            maxPrice: 20000,
         },
         selectedBrands: [],
         selectedCategories: [],

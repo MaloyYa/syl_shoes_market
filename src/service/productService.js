@@ -48,6 +48,8 @@ export const productsService = {
                 queryParams.append('color', color);
             });
         }
+        queryParams.append('page', 1)
+        queryParams.append('limit', 50)
 
         setLoading(true);
         const respProduct = await fetch(
